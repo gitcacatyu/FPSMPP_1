@@ -1,0 +1,33 @@
+{
+  "projectType": "webapp",
+  "setup": [],
+  "assertions": [
+    {
+      "name": "game-html-served",
+      "kind": "http-probe",
+      "startCommand": "python",
+      "startArgs": [
+        "-m",
+        "http.server",
+        "8766",
+        "--bind",
+        "127.0.0.1"
+      ],
+      "url": "http://127.0.0.1:8766/index.html",
+      "verificationMethod": "http-status",
+      "expected": "200",
+      "timeoutSeconds": 30
+    },
+    {
+      "name": "tests-pass",
+      "kind": "process",
+      "command": "npm",
+      "args": [
+        "test"
+      ],
+      "verificationMethod": "test-results",
+      "expected": "0",
+      "timeoutSeconds": 300
+    }
+  ]
+}

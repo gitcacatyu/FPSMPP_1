@@ -1,0 +1,76 @@
+{
+  "planHash": "3965da34c4db4685f4434704d6c65eb03c75831c9fc03c190f71fad6593a955a",
+  "phase": "standalone",
+  "recordedAtUtc": "2026-11-02T18:30:08.2602174Z",
+  "retryCount": 0,
+  "resetBaseline": false,
+  "complete": true,
+  "result": {
+    "setupSucceeded": true,
+    "setupDurationMs": 0,
+    "setupFailureOutput": null,
+    "assertions": [
+      {
+        "name": "game-html-served",
+        "kind": "http-probe",
+        "verificationMethod": "http-status",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": null,
+        "outputSample": "HTTP 200\n\u003C!DOCTYPE html\u003E\r\n\u003Chtml lang=\u0022pt-BR\u0022\u003E\r\n\u003Chead\u003E\r\n  \u003Cmeta charset=\u0022UTF-8\u0022\u003E\r\n  \u003Cmeta name=\u0022viewport\u0022 content=\u0022width=device-width, initial-scale=1.0\u0022\u003E\r\n  \u003Cmeta name=\u0022theme-color\u0022 content=\u0022#10130f\u0022\u003E\r\n  \u003Ctitle\u003E\u00DALTIMO C\u00CDRCULO \u2014 FPS\u003C/title\u003E\r\n  \u003Cstyle\u003E\r\n    :root{color-scheme:dark;--acid:#d5fa56;--paper:#f0f0e9;--muted:#9a9d91;--panel:rgba(15,18,14,.91);--line:rgba(255,255,255,.14)}\r\n    *{box-sizing:border-box}\r\n    body{margin:0;min-height:100vh;background:#10130f;color:var(--paper);font-family:Arial,sans-serif}\r\n    button,input,select{font:inherit}\r\n    button{cursor:pointer}\r\n    .game{position:relative;width:100vw;height:100vh;height:100dvh;min-height:0;margin:0;overflow:hidden;background:#1a211b;isolation:isolate;--hud-accent:#d5fa56;cursor:url(\u0022data:image/svg\u002Bxml,%3Csvg xmlns=\u0027http://www.w3.org/2000/svg\u0027 width=\u002732\u0027 height=\u002732\u0027 viewBox=\u00270 0 32 32\u0027%3E%3Cg fill=\u0027none\u0027 stroke=\u0027%23d5fa56\u0027 stroke-width=\u00272\u0027%3E%3Cpath d=\u0027M16 2v8m0 12v8M2 16h8m12 0h8\u0027/%3E%3Ccircle cx=\u002716\u0027 cy=\u002716\u0027 r=\u00275\u0027/%3E%3C/g%3E%3Ccircle cx=\u002716\u0027 cy=\u002716\u0027 r=\u00271.5\u0027 fill=\u0027%23ffffff\u0027/%3E%3C/svg%3E\u0022) 16 16,crosshair}\r\n    #screen{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;cursor:inherit}\r\n    .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 42%,rgba(0,0,0,.24) 100%);z-index:1}\r\n    .hud{position:absolute;inset:0;z-index:2;pointer-events:none}\r\n    .topbar{position:absolute;top:24px;left:28px;right:172px;display:flex;justify-content:space-between;align-items:flex-start}\r\n    .brand{font-family:\u0022Arial Narrow\u0022,Impact,sans-serif;font-size:13px;font-weight:800;letter-spacing:.23em;color:var(--acid)}\r\n    .match-meta{display:flex;gap:10px;margin-top:8px;font-size:11px;color:#d4d7cb;letter-spacing:.08em}\r\n    .tag{padding:7px 10px;background:rgba(8,10,8,.64);border:1px solid var(--line);border-radius:3px}\r\n    .alive{font-family:\u0022Arial Narrow\u0022,Impact,sans-serif;font-size:22px;font-weight:800}\r\n    .alive span{color:var(--hud-accent)}\r\n    .fullscreen-btn{position:absolute;z-index:4;right:28px;top:24px;pointer-events:auto;padding:8px 11px;background:rgba(8,10,8,.72);border:1px solid var(--line);color:#fff;font-size:12px;letter-spacing:.08em}\r\n    .fullscreen-btn:hover{color:var(--acid);border-color:var(--acid)}\r\n    .mini-wrap{position:absolute;right:28px;top:92px;width:144px;height:144px;padding:5px;border:1px solid rgba(255,255,255,.34);background:rgba(8,10,8,.65);border-radius:3px}\r\n    #minimap{width:100%;height:100%;display:block}\r\n    .status{position:absolute;left:28px;bottom:30px;width:220px}\r\n    .player-name{font-family:\u0022Arial Narrow\u0022,Impact,sans-serif;font-size:15px;letter-spacing:.15em;font-weight:700;margin-bottom:8px}\r\n    .meter{height:8px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.2);margin-bottom:7px;position:relative}\r\n    .meter-fill{height:100%;background:var(--hud-accent);transition:width .18s}\r\n    .meter-label{display:flex;justify-content:space-between;font-family:\u0022Arial Narrow\u0022,Impact,sans-serif;font-size:11px;letter-spacing:.15em;color:#e5e6db;margin-bottom:4px}\r\n    .weapon-card{position:absolute;right:28px;bottom:28px;text-align:right;padding:12px 15px;background:rgba(8,10,8,.72);border:1px solid var(--line);min-width:176px}\r\n    .weapon-title{font-family:\u0022Arial Narrow\u0022,Impact,sans-serif;font-size:19px;font-weight:800;letter-spacing:.08em}\r\n    .ammo{font-family:\u0022Arial Narrow\u0022,Impact,sans-serif;font-size:27px;font-weight:700;color:var(--hud-accent)}\r\n    .ammo small{font-size:14px;color:#b1b5a9}\r\n    .inventory{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:6px;pointer-events:auto}\r\n    .inventory-slot{min-width:94px;padding:7px 10px;text-align:left;background:rgba(8,10,8,.82);border:1px solid var(--line);color:#fff}\r\n    .inventory-slot.active{border-color:var(--hud-accent);box-shadow:inset 0 -2px var(--hud-accent)}\r\n    .inventory-slot:disabled{opacity:.42;cursor:default}\r\n    .slot-key{display:inline-block;margin-right:6px;color:var(--hud-accent);font-family:\u0022Arial Narrow\u0022,Impact,sans-serif;f\n\u2026[truncated]",
+        "durationMs": 934
+      },
+      {
+        "name": "tests-pass",
+        "kind": "process",
+        "verificationMethod": "test-results",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "\r\n\u003E mpp-fps@1.0.0 test\r\n\u003E node --test\r\n\r\nTAP version 13\r\n# Subtest: all game modes create their configured bot counts and keep bots on M4A1\r\nok 1 - all game modes create their configured bot counts and keep bots on M4A1\r\n  ---\r\n  duration_ms: 927.5868\r\n  type: \u0027test\u0027\r\n  ...\r\n# Subtest: each mode uses a distinct world palette\r\nok 2 - each mode uses a distinct world palette\r\n  ---\r\n  duration_ms: 13.2212\r\n  type: \u0027test\u0027\r\n  ...\r\n# Subtest: Hardcore offers every weapon, applies hard difficulty, and places other weapons once\r\nok 3 - Hardcore offers every weapon, applies hard difficulty, and places other weapons once\r\n  ---\r\n  duration_ms: 2016.3069\r\n  type: \u0027test\u0027\r\n  ...\r\n# Subtest: Hardcore flashlight starts on, toggles with L, and renders\r\nok 4 - Hardcore flashlight starts on, toggles with L, and renders\r\n  ---\r\n  duration_ms: 169.296\r\n  type: \u0027test\u0027\r\n  ...\r\n# Subtest: all shotguns hit beyond close range and apply distance damage falloff\r\nok 5 - all shotguns hit beyond close range and apply distance damage falloff\r\n  ---\r\n  duration_ms: 663.5682\r\n  type: \u0027test\u0027\r\n  ...\r\n1..5\r\n# tests 5\r\n# suites 0\r\n# pass 5\r\n# fail 0\r\n# cancelled 0\r\n# skipped 0\r\n# todo 0\r\n# duration_ms 3985.3503\r\n",
+        "durationMs": 6349,
+        "testResults": {
+          "testFramework": "unknown",
+          "runnerDetectedFrom": "none",
+          "testsTotal": 0,
+          "testsPassed": 0,
+          "testsFailed": 0,
+          "testsSkipped": 0,
+          "parseFailed": true
+        }
+      }
+    ],
+    "executions": [
+      {
+        "source": "game-html-served",
+        "resolvedExecutable": "C:\\Users\\lacer\\AppData\\Local\\Programs\\Python\\Python312\\python.EXE",
+        "args": [
+          "-m",
+          "http.server",
+          "8766",
+          "--bind",
+          "127.0.0.1"
+        ],
+        "cwd": "C:\\Users\\lacer\\OneDrive\\\u00C1rea de Trabalho\\FPS mpp",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "tests-pass",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "test"
+        ],
+        "cwd": "C:\\Users\\lacer\\OneDrive\\\u00C1rea de Trabalho\\FPS mpp",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      }
+    ]
+  }
+}

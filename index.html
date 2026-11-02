@@ -11,7 +11,7 @@
     body{margin:0;min-height:100vh;background:#10130f;color:var(--paper);font-family:Arial,sans-serif}
     button,input,select{font:inherit}
     button{cursor:pointer}
-    .game{position:relative;width:100vw;height:100vh;height:100dvh;min-height:0;margin:0;overflow:hidden;background:#1a211b;isolation:isolate;cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg fill='none' stroke='%23d5fa56' stroke-width='2'%3E%3Cpath d='M16 2v8m0 12v8M2 16h8m12 0h8'/%3E%3Ccircle cx='16' cy='16' r='5'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='1.5' fill='%23ffffff'/%3E%3C/svg%3E") 16 16,crosshair}
+    .game{position:relative;width:100vw;height:100vh;height:100dvh;min-height:0;margin:0;overflow:hidden;background:#1a211b;isolation:isolate;--hud-accent:#d5fa56;cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg fill='none' stroke='%23d5fa56' stroke-width='2'%3E%3Cpath d='M16 2v8m0 12v8M2 16h8m12 0h8'/%3E%3Ccircle cx='16' cy='16' r='5'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='1.5' fill='%23ffffff'/%3E%3C/svg%3E") 16 16,crosshair}
     #screen{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;cursor:inherit}
     .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 42%,rgba(0,0,0,.24) 100%);z-index:1}
     .hud{position:absolute;inset:0;z-index:2;pointer-events:none}
@@ -20,7 +20,7 @@
     .match-meta{display:flex;gap:10px;margin-top:8px;font-size:11px;color:#d4d7cb;letter-spacing:.08em}
     .tag{padding:7px 10px;background:rgba(8,10,8,.64);border:1px solid var(--line);border-radius:3px}
     .alive{font-family:"Arial Narrow",Impact,sans-serif;font-size:22px;font-weight:800}
-    .alive span{color:var(--acid)}
+    .alive span{color:var(--hud-accent)}
     .fullscreen-btn{position:absolute;z-index:4;right:28px;top:24px;pointer-events:auto;padding:8px 11px;background:rgba(8,10,8,.72);border:1px solid var(--line);color:#fff;font-size:12px;letter-spacing:.08em}
     .fullscreen-btn:hover{color:var(--acid);border-color:var(--acid)}
     .mini-wrap{position:absolute;right:28px;top:92px;width:144px;height:144px;padding:5px;border:1px solid rgba(255,255,255,.34);background:rgba(8,10,8,.65);border-radius:3px}
@@ -28,17 +28,17 @@
     .status{position:absolute;left:28px;bottom:30px;width:220px}
     .player-name{font-family:"Arial Narrow",Impact,sans-serif;font-size:15px;letter-spacing:.15em;font-weight:700;margin-bottom:8px}
     .meter{height:8px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.2);margin-bottom:7px;position:relative}
-    .meter-fill{height:100%;background:var(--acid);transition:width .18s}
+    .meter-fill{height:100%;background:var(--hud-accent);transition:width .18s}
     .meter-label{display:flex;justify-content:space-between;font-family:"Arial Narrow",Impact,sans-serif;font-size:11px;letter-spacing:.15em;color:#e5e6db;margin-bottom:4px}
     .weapon-card{position:absolute;right:28px;bottom:28px;text-align:right;padding:12px 15px;background:rgba(8,10,8,.72);border:1px solid var(--line);min-width:176px}
     .weapon-title{font-family:"Arial Narrow",Impact,sans-serif;font-size:19px;font-weight:800;letter-spacing:.08em}
-    .ammo{font-family:"Arial Narrow",Impact,sans-serif;font-size:27px;font-weight:700;color:var(--acid)}
+    .ammo{font-family:"Arial Narrow",Impact,sans-serif;font-size:27px;font-weight:700;color:var(--hud-accent)}
     .ammo small{font-size:14px;color:#b1b5a9}
     .inventory{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:6px;pointer-events:auto}
     .inventory-slot{min-width:94px;padding:7px 10px;text-align:left;background:rgba(8,10,8,.82);border:1px solid var(--line);color:#fff}
-    .inventory-slot.active{border-color:var(--acid);box-shadow:inset 0 -2px var(--acid)}
+    .inventory-slot.active{border-color:var(--hud-accent);box-shadow:inset 0 -2px var(--hud-accent)}
     .inventory-slot:disabled{opacity:.42;cursor:default}
-    .slot-key{display:inline-block;margin-right:6px;color:var(--acid);font-family:"Arial Narrow",Impact,sans-serif;font-weight:800}
+    .slot-key{display:inline-block;margin-right:6px;color:var(--hud-accent);font-family:"Arial Narrow",Impact,sans-serif;font-weight:800}
     .slot-name{font-family:"Arial Narrow",Impact,sans-serif;font-size:13px;font-weight:800;letter-spacing:.04em}
     .slot-ammo{display:block;margin:4px 0 0 17px;font-size:10px;color:#b1b5a9}
     .hint{position:absolute;left:50%;bottom:68px;transform:translateX(-50%);font-family:"Arial Narrow",Impact,sans-serif;font-size:13px;letter-spacing:.11em;text-align:center;color:#fff;text-shadow:0 2px 6px #000;white-space:nowrap}
@@ -61,14 +61,21 @@
     .overlay:before{content:"";right:clamp(18px,9vw,150px);top:50%;width:clamp(260px,37vw,540px);aspect-ratio:1;border:1px solid color-mix(in srgb,var(--mode-accent) 48%,transparent);border-radius:50%;transform:translateY(-50%);background:repeating-radial-gradient(circle,transparent 0 42px,color-mix(in srgb,var(--mode-accent) 15%,transparent) 43px 44px,transparent 45px 82px);box-shadow:0 0 100px var(--mode-glow),inset 0 0 70px var(--mode-glow);opacity:.62;animation:menu-radar 32s linear infinite}
     .overlay:after{content:"SURVIVAL";right:clamp(24px,12vw,190px);top:50%;transform:translateY(-50%) rotate(-90deg);color:var(--mode-accent);font-family:"Arial Narrow",Impact,sans-serif;font-size:clamp(42px,8vw,104px);font-weight:900;letter-spacing:.18em;opacity:.1;white-space:nowrap}
     @keyframes menu-radar{to{rotate:360deg}}
+    .game[data-mode="aim"]{--hud-accent:#83b9fd}
     .game[data-mode="aim"] #menu{--mode-accent:#83b9fd;--mode-glow:rgba(83,151,255,.2);background:radial-gradient(ellipse at 82% 48%,rgba(27,76,139,.32),transparent 44%),linear-gradient(90deg,rgba(6,9,16,.98) 0%,rgba(7,11,20,.78) 48%,rgba(8,13,22,.14) 100%),linear-gradient(0deg,rgba(8,10,18,.68),transparent 44%)}
     .game[data-mode="aim"] #menu:after{content:"PRECISÃO"}
+    .game[data-mode="machinegun"]{--hud-accent:#f3b45e}
     .game[data-mode="machinegun"] #menu{--mode-accent:#f3b45e;--mode-glow:rgba(243,145,54,.2);background:radial-gradient(ellipse at 82% 48%,rgba(129,68,24,.34),transparent 45%),linear-gradient(90deg,rgba(16,10,7,.98) 0%,rgba(20,13,8,.8) 48%,rgba(24,14,7,.12) 100%),linear-gradient(0deg,rgba(16,10,7,.64),transparent 44%)}
     .game[data-mode="machinegun"] #menu:after{content:"ARSENAL"}
+    .game[data-mode="shotgun"]{--hud-accent:#ef8585}
     .game[data-mode="shotgun"] #menu{--mode-accent:#ef8585;--mode-glow:rgba(239,82,82,.2);background:radial-gradient(ellipse at 82% 48%,rgba(132,36,39,.32),transparent 45%),linear-gradient(90deg,rgba(16,7,9,.98) 0%,rgba(20,9,11,.8) 48%,rgba(24,9,10,.12) 100%),linear-gradient(0deg,rgba(15,7,9,.65),transparent 44%)}
     .game[data-mode="shotgun"] #menu:after{content:"IMPACTO"}
+    .game[data-mode="knife"]{--hud-accent:#65e4c4}
     .game[data-mode="knife"] #menu{--mode-accent:#65e4c4;--mode-glow:rgba(45,215,179,.2);background:radial-gradient(ellipse at 82% 48%,rgba(21,101,83,.32),transparent 45%),linear-gradient(90deg,rgba(5,14,13,.98) 0%,rgba(7,18,16,.8) 48%,rgba(7,22,18,.12) 100%),linear-gradient(0deg,rgba(6,13,12,.66),transparent 44%)}
     .game[data-mode="knife"] #menu:after{content:"CORPO A CORPO"}
+    .game[data-mode="hardcore"]{--hud-accent:#ff655c}
+    .game[data-mode="hardcore"] #menu{--mode-accent:#ff655c;--mode-glow:rgba(255,48,38,.22);background:radial-gradient(ellipse at 82% 48%,rgba(128,22,25,.38),transparent 45%),linear-gradient(90deg,rgba(18,5,7,.99) 0%,rgba(24,7,9,.82) 48%,rgba(27,8,11,.16) 100%),linear-gradient(0deg,rgba(18,4,7,.72),transparent 44%)}
+    .game[data-mode="hardcore"] #menu:after{content:"SEM PIEDADE"}
     .game[data-mode="normal"] #menu:after{content:"SOBREVIVA"}
     .menu-content{width:min(490px,100%);padding:34px 0}
     .eyebrow{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.24em;color:var(--mode-accent)}
@@ -88,13 +95,33 @@
     .mode-picker{width:min(100%,390px);margin:0 0 15px}
     .mode-picker-label{display:block;margin-bottom:9px;font-size:10px;font-weight:700;letter-spacing:.18em;color:var(--mode-accent)}
     .mode-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-    .mode-card{position:relative;min-height:78px;padding:11px 12px;text-align:left;color:var(--paper);background:linear-gradient(145deg,rgba(31,36,27,.96),rgba(13,16,12,.94));border:1px solid rgba(255,255,255,.16);transition:border-color .16s,background .16s,transform .16s}
+    .mode-card{position:relative;min-height:78px;padding:11px 12px;text-align:left;color:var(--paper);background:linear-gradient(145deg,rgba(31,36,27,.96),rgba(13,16,12,.94));border:1px solid rgba(255,255,255,.16);transition:border-color .16s,background .16s,transform .16s;overflow:hidden}
+    .mode-card:before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.72}
+    .mode-card>*{position:relative;z-index:1}
+    .mode-card[data-mode="normal"]:before{background:linear-gradient(135deg,rgba(213,250,86,.18),transparent 52%),repeating-linear-gradient(135deg,transparent 0 19px,rgba(213,250,86,.055) 20px 21px)}
+    .mode-card[data-mode="aim"]:before{background:radial-gradient(circle at 88% 55%,transparent 0 13px,rgba(131,185,253,.28) 14px 15px,transparent 16px 27px,rgba(131,185,253,.2) 28px 29px,transparent 30px),linear-gradient(110deg,rgba(57,106,177,.2),transparent 72%)}
+    .mode-card[data-mode="machinegun"]:before{background:repeating-linear-gradient(120deg,transparent 0 10px,rgba(243,180,94,.12) 11px 13px),linear-gradient(90deg,rgba(139,76,27,.24),transparent 70%)}
+    .mode-card[data-mode="shotgun"]:before{background:radial-gradient(circle at 88% 50%,rgba(239,133,133,.25) 0 2px,transparent 3px 11px,rgba(239,133,133,.18) 12px 14px,transparent 15px 25px,rgba(239,133,133,.13) 26px 28px,transparent 29px),linear-gradient(120deg,rgba(133,37,43,.2),transparent 75%)}
+    .mode-card[data-mode="knife"]:before{background:linear-gradient(125deg,transparent 0 58%,rgba(101,228,196,.2) 59% 60%,transparent 61%),linear-gradient(45deg,rgba(25,112,92,.2),transparent 68%)}
+    .mode-card[data-mode="hardcore"]:before{background:repeating-linear-gradient(135deg,transparent 0 12px,rgba(255,101,92,.13) 13px 15px),linear-gradient(90deg,rgba(115,20,24,.28),transparent 78%)}
     .mode-card:hover{border-color:rgba(213,250,86,.65);transform:translateY(-2px)}
     .mode-card[aria-pressed="true"]{border-color:var(--mode-accent);background:linear-gradient(145deg,color-mix(in srgb,var(--mode-accent) 24%,#20241b),rgba(17,21,13,.98));box-shadow:inset 3px 0 var(--mode-accent),0 0 18px var(--mode-glow)}
     .mode-card:focus-visible{outline:2px solid var(--mode-accent);outline-offset:2px}
     .mode-card-name{display:block;font-family:"Arial Narrow",Impact,sans-serif;font-size:15px;font-weight:900;letter-spacing:.07em}
     .mode-card-detail{display:block;margin-top:5px;color:#b5b9ab;font-size:10px;line-height:1.35}
     .mode-card-count{position:absolute;top:10px;right:10px;color:var(--mode-accent);font-family:"Arial Narrow",Impact,sans-serif;font-size:10px;font-weight:800;letter-spacing:.06em}
+    .hardcore-loadout{display:none;width:min(100%,390px);margin:-4px 0 14px;padding:12px;background:rgba(8,10,9,.82);border:1px solid rgba(255,101,92,.42)}
+    .game[data-mode="hardcore"] .hardcore-loadout{display:block}
+    .hardcore-loadout label{display:block;margin-bottom:7px;color:#ff938b;font-size:10px;font-weight:800;letter-spacing:.16em}
+    .hardcore-loadout select{width:100%;padding:10px 12px;background:#171311;border:1px solid rgba(255,101,92,.58);color:#fff}
+    .flashlight-status{position:absolute;top:62px;right:28px;padding:7px 10px;border:1px solid rgba(255,255,255,.25);background:rgba(5,8,10,.72);color:#ffe7b0;font-size:10px;font-weight:800;letter-spacing:.12em}
+    .flashlight-status.off{color:#969a9b;border-color:rgba(255,255,255,.12)}
+    .game:not([data-mode="hardcore"]) .flashlight-status{display:none}
+    .game[data-mode="aim"] .mode-card[aria-pressed="true"]{background:linear-gradient(145deg,rgba(40,81,141,.7),rgba(9,15,27,.98))}
+    .game[data-mode="machinegun"] .mode-card[aria-pressed="true"]{background:repeating-linear-gradient(135deg,rgba(121,69,26,.42) 0 8px,rgba(24,16,10,.94) 8px 16px)}
+    .game[data-mode="shotgun"] .mode-card[aria-pressed="true"]{background:radial-gradient(circle at 88% 50%,rgba(239,85,85,.28),transparent 44%),linear-gradient(145deg,rgba(102,29,34,.72),rgba(25,10,12,.98))}
+    .game[data-mode="knife"] .mode-card[aria-pressed="true"]{background:linear-gradient(125deg,rgba(23,104,86,.58) 0 48%,rgba(9,28,25,.96) 49% 100%)}
+    .game[data-mode="hardcore"] .mode-card[aria-pressed="true"]{background:repeating-linear-gradient(135deg,rgba(116,24,28,.46) 0 8px,rgba(28,9,11,.96) 8px 16px)}
     @media(prefers-reduced-motion:reduce){.overlay:before{animation:none}.overlay,.mode-card{transition:none}}
     @media(max-width:680px){.overlay:before{right:-90px;width:280px;opacity:.35}.overlay:after{right:-50px;font-size:42px;opacity:.07}}
     .mode-description{min-height:30px;margin:8px 0 0;color:#a5a89d;font-size:11px;line-height:1.5}
@@ -112,7 +139,7 @@
     .control-line{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:13px;color:#ddd}
     kbd{font-family:inherit;color:var(--acid);background:#20251c;padding:3px 6px;border:1px solid #464d3d}
     .small-btn{margin-top:19px;padding:9px 15px;border:1px solid var(--line);background:transparent;color:#fff}
-    @media(max-width:680px){.overlay{padding:26px}.mini-wrap{top:78px;right:12px;width:100px;height:100px}.topbar{top:14px;left:12px;right:140px}.fullscreen-btn{top:14px;right:12px;padding:7px}.status{left:12px;bottom:12px;width:140px}.weapon-card{right:12px;bottom:70px;min-width:126px;padding:7px 9px}.inventory{width:calc(100% - 24px);bottom:8px;gap:4px}.inventory-slot{flex:1;min-width:0;padding:6px 5px}.slot-name{font-size:11px}.slot-ammo{font-size:9px;margin-left:14px}.hint{bottom:119px;font-size:10px;letter-spacing:.025em;max-width:90%;white-space:normal}.intro{font-size:13px}.brand{font-size:10px}.match-meta{gap:5px}.tag{padding:6px}.alive{font-size:18px}}
+    @media(max-width:680px){.overlay{padding:26px}.mini-wrap{top:78px;right:12px;width:100px;height:100px}.topbar{top:14px;left:12px;right:140px}.fullscreen-btn{top:14px;right:12px;padding:7px}.flashlight-status{top:54px;right:12px;padding:5px 7px;font-size:8px}.status{left:12px;bottom:12px;width:140px}.weapon-card{right:12px;bottom:70px;min-width:126px;padding:7px 9px}.inventory{width:calc(100% - 24px);bottom:8px;gap:4px}.inventory-slot{flex:1;min-width:0;padding:6px 5px}.slot-name{font-size:11px}.slot-ammo{font-size:9px;margin-left:14px}.hint{bottom:119px;font-size:10px;letter-spacing:.025em;max-width:90%;white-space:normal}.intro{font-size:13px}.brand{font-size:10px}.match-meta{gap:5px}.tag{padding:6px}.alive{font-size:18px}}
   </style>
 </head>
 <body>
@@ -125,6 +152,7 @@
         <div class="tag alive"><span id="aliveCount">21</span> <span>VIVOS</span></div>
       </div>
       <button class="fullscreen-btn" id="fullscreenBtn" type="button" aria-label="Alternar tela cheia">⛶ TELA CHEIA</button>
+      <div class="flashlight-status" id="flashlightStatus">🔦 LANTERNA LIGADA · L</div>
       <div class="mini-wrap"><canvas id="minimap" width="134" height="134"></canvas></div>
       <div class="crosshair" id="crosshair"></div>
       <div class="damage-direction" id="damageDirection" aria-hidden="true">▲</div>
@@ -156,10 +184,17 @@
             <button type="button" class="mode-card" data-mode="normal" aria-pressed="true"><span class="mode-card-count">18 BOTS</span><span class="mode-card-name">Normal!</span><span class="mode-card-detail">Sobrevivência · arsenal completo</span></button>
             <button type="button" class="mode-card" data-mode="aim" aria-pressed="false"><span class="mode-card-count">25 BOTS</span><span class="mode-card-name">Na mira!</span><span class="mode-card-detail">Sniper · longa distância</span></button>
             <button type="button" class="mode-card" data-mode="machinegun" aria-pressed="false"><span class="mode-card-count">15 BOTS</span><span class="mode-card-name">Metralhando!</span><span class="mode-card-detail">Metralhadoras e fuzis</span></button>
-            <button type="button" class="mode-card" data-mode="shotgun" aria-pressed="false"><span class="mode-card-count">14 BOTS</span><span class="mode-card-name">Peiba!</span><span class="mode-card-detail">Só escopetas</span></button>
+            <button type="button" class="mode-card" data-mode="shotgun" aria-pressed="false"><span class="mode-card-count">14 BOTS</span><span class="mode-card-name">Peiba!</span><span class="mode-card-detail">Escopetas · alcance ampliado</span></button>
             <button type="button" class="mode-card" data-mode="knife" aria-pressed="false"><span class="mode-card-count">10 BOTS</span><span class="mode-card-name">Afiado!</span><span class="mode-card-detail">Só a faca · combate próximo</span></button>
+            <button type="button" class="mode-card" data-mode="hardcore" aria-pressed="false"><span class="mode-card-count">20 BOTS</span><span class="mode-card-name">Hardcore</span><span class="mode-card-detail">Inimigos fortes · cenário noturno</span></button>
           </div>
           <p class="mode-description" id="modeDescription">Partida clássica: comece com pistola, encontre armas e enfrente 18 bots.</p>
+        </div>
+        <div class="hardcore-loadout">
+          <label for="hardcoreWeapon">ESCOLHA SUA ARMA INICIAL</label>
+          <select id="hardcoreWeapon">
+            <option>PISTOLA</option><option>M4A1</option><option>AK-47</option><option>MP5</option><option>VECTOR</option><option>UMP-45</option><option>ESCOPETA</option><option>M1014</option><option>CALIBRE 12</option><option>DOIS CANOS</option><option>SNIPER</option><option>SCAR-H</option><option>FACA</option>
+          </select>
         </div>
         <button class="primary" id="playBtn">ENTRAR NA PARTIDA <span>↗</span></button>
         <button class="secondary" id="menuFullscreenBtn">⛶ &nbsp; JOGAR EM TELA CHEIA</button>
@@ -183,6 +218,7 @@
         <div class="control-line"><span>Trocar arma do inventário</span><span><kbd>1</kbd>–<kbd>4</kbd> / RODA DO MOUSE</span></div>
         <div class="control-line"><span>Correr / pausar</span><span><kbd>SHIFT</kbd> / <kbd>ESC</kbd></span></div>
         <div class="control-line"><span>Tela cheia</span><span><kbd>F</kbd></span></div>
+        <div class="control-line"><span>Lanterna</span><span><kbd>L</kbd></span></div>
         <button class="small-btn" id="closeControls">ENTENDI</button>
       </div>
     </section>
@@ -199,24 +235,38 @@
   const mini = document.getElementById("minimap"), mctx = mini.getContext("2d");
   const W = 640, H = 360, FOV = Math.PI / 3;
   canvas.width = W; canvas.height = H;
+  const lightingCanvas=document.createElement("canvas");
+  lightingCanvas.width=W;lightingCanvas.height=H;
+  const lightingCtx=lightingCanvas.getContext("2d");
   const $ = id => document.getElementById(id);
   const MAP_SIZE = 48;
   const DEATH_ANIMATION_MS = 1250;
   const BOT_WEAPON = "M4A1";
   const MODES = {
-    normal:{name:"NORMAL!",botCount:18,startWeapon:"PISTOLA",weapons:["PISTOLA","M4A1","AK-47","MP5","VECTOR","UMP-45","ESCOPETA","M1014","SNIPER","SCAR-H"],locked:false,ammo:12,reserve:48},
+    normal:{name:"NORMAL!",botCount:18,startWeapon:"PISTOLA",weapons:["PISTOLA","M4A1","AK-47","MP5","VECTOR","UMP-45","ESCOPETA","M1014","CALIBRE 12","DOIS CANOS","SNIPER","SCAR-H"],locked:false,ammo:12,reserve:48},
     aim:{name:"NA MIRA!",botCount:25,startWeapon:"SNIPER",weapons:["SNIPER"],locked:true,ammo:5,reserve:100},
     machinegun:{name:"METRALHANDO!",botCount:15,startWeapon:"M4A1",weapons:["M4A1","AK-47","MP5","VECTOR","UMP-45","SCAR-H"],locked:false,ammo:30,reserve:180},
-    shotgun:{name:"PEIBA!",botCount:14,startWeapon:"ESCOPETA",weapons:["ESCOPETA","M1014"],locked:false,ammo:6,reserve:48},
-    knife:{name:"AFIADO!",botCount:10,startWeapon:"FACA",weapons:["FACA"],locked:true,ammo:Infinity,reserve:Infinity}
+    shotgun:{name:"PEIBA!",botCount:14,startWeapon:"ESCOPETA",weapons:["ESCOPETA","M1014","CALIBRE 12","DOIS CANOS"],locked:false,ammo:6,reserve:48},
+    knife:{name:"AFIADO!",botCount:10,startWeapon:"FACA",weapons:["FACA"],locked:true,ammo:Infinity,reserve:Infinity},
+    hardcore:{name:"HARDCORE",botCount:20,startWeapon:"PISTOLA",weapons:["PISTOLA","M4A1","AK-47","MP5","VECTOR","UMP-45","ESCOPETA","M1014","CALIBRE 12","DOIS CANOS","SNIPER","SCAR-H","FACA"],locked:false,hardcore:true}
+  };
+  const WORLD_THEMES={
+    normal:{sky:["#82978c","#b5b39a"],floor:["#59604a","#292e24"],wall:[119,119,101]},
+    aim:{sky:["#17283d","#607891"],floor:["#354252","#141e2d"],wall:[91,119,153]},
+    machinegun:{sky:["#302117","#a66b3d"],floor:["#624126","#281b13"],wall:[143,91,55]},
+    shotgun:{sky:["#38191c","#a95c54"],floor:["#512a26","#241716"],wall:[145,79,75]},
+    knife:{sky:["#102b28","#598c7d"],floor:["#244c42","#10251f"],wall:[63,124,107]},
+    hardcore:{sky:["#070d17","#172536"],floor:["#17212b","#080c12"],wall:[68,91,115]}
   };
   const MODE_DESCRIPTIONS = {
     normal:"Partida clássica: comece com pistola, encontre armas e enfrente 18 bots.",
     aim:"Comece com o sniper e fique com ele. Elimine 25 bots a longa distância.",
     machinegun:"Use metralhadoras e fuzis automáticos. Colete munição e enfrente 15 bots.",
-    shotgun:"Só valem escopetas. Chegue perto e elimine 14 bots.",
-    knife:"Sem armas de fogo: só a faca contra 10 bots."
+    shotgun:"Só escopetas: agora alcançam mais longe, com dano que diminui à distância. Elimine 14 bots.",
+    knife:"Sem armas de fogo: só a faca contra 10 bots.",
+    hardcore:"20 bots mais fortes, cenário escuro e lanterna. Escolha qualquer arma inicial."
   };
+  const SHOTGUN_WEAPONS = new Set(["ESCOPETA","M1014","CALIBRE 12","DOIS CANOS"]);
   function createMap(){
     const cells=Array.from({length:MAP_SIZE},(_,y)=>Array.from({length:MAP_SIZE},(_,x)=>
       x===0||y===0||x===MAP_SIZE-1||y===MAP_SIZE-1?"#":"."));
@@ -235,15 +285,17 @@
     "MP5": {mag:32,damage:19,rate:100,range:13,color:"#b28df2"},
     "VECTOR": {mag:25,damage:17,rate:75,range:11,color:"#56e0c3"},
     "UMP-45": {mag:25,damage:24,rate:160,range:14,color:"#e5cd5c"},
-    "ESCOPETA": {mag:6,damage:17,rate:650,range:7,color:"#ec8585"},
-    "M1014": {mag:8,damage:15,rate:460,range:8,color:"#ef9a64"},
+    "ESCOPETA": {mag:6,damage:7,rate:650,range:18,pellets:8,color:"#ec8585"},
+    "M1014": {mag:8,damage:6,rate:460,range:20,pellets:8,color:"#ef9a64"},
+    "CALIBRE 12": {mag:5,damage:8,rate:740,range:18,pellets:10,color:"#e1bc72"},
+    "DOIS CANOS": {mag:2,damage:10,rate:780,range:16,pellets:10,color:"#ca8b69"},
     "SNIPER": {mag:5,damage:200,rate:1000,range:48,color:"#83b9fd"},
     "SCAR-H": {mag:20,damage:40,rate:260,range:24,color:"#f078b4"},
     "FACA": {mag:1,damage:65,rate:520,range:2.4,color:"#d9ded6"}
   };
   let player, bots, pickups, incomingShots = [], inventory = [], activeSlot = 0, currentMode = MODES.normal, weaponLocked = false, knifeSwingUntil = 0, keys = {}, depth = new Float32Array(W), running = false, paused = false;
   let lastFrame = 0, lastShot = 0, recoil = 0, hitUntil = 0, zoneTimer = 120, toastTimer = 0;
-  let score = 0, soundOn = true, audio, isAiming = false, gameOver = false;
+  let score = 0, soundOn = true, audio, isAiming = false, gameOver = false, flashlightOn = true;
   const difficulty = {easy:{botDamage:5,botAccuracy:.48,health:120},normal:{botDamage:8,botAccuracy:.65,health:100},hard:{botDamage:12,botAccuracy:.78,health:85}};
   function currentFov(){return isAiming?(player.weapon==="SNIPER" ? .2 : .48):FOV}
   function focalLength(){return W/(2*Math.tan(currentFov()/2))}
@@ -294,14 +346,17 @@
     enterFullscreen();
   }
   function startGame(){
-    const cfg=difficulty[$("difficulty").value]||difficulty.normal;
     currentMode=MODES[$("gameMode").value]||MODES.normal;
+    const cfg=currentMode.hardcore?difficulty.hard:(difficulty[$("difficulty").value]||difficulty.normal);
     weaponLocked=currentMode.locked;
     setAiming(false);
+    flashlightOn=true;updateFlashlightStatus();
     const center={x:MAP_SIZE/2,y:MAP_SIZE/2};
-    const startWeapon=currentMode.startWeapon;
-    player={...findOpenPoint(center,0,[],4),angle:Math.random()*Math.PI*2,health:cfg.health,maxHealth:cfg.health,armor:100,maxArmor:100,weapon:startWeapon,ammo:currentMode.ammo,reserve:currentMode.reserve,mag:weaponSpecs[startWeapon].mag,deadAt:null};
-    inventory=[{type:startWeapon,ammo:currentMode.ammo,reserve:currentMode.reserve}];activeSlot=0;
+    const startWeapon=currentMode.hardcore?$("hardcoreWeapon").value:currentMode.startWeapon;
+    const startAmmo=currentMode.hardcore?(startWeapon==="FACA"?Infinity:weaponSpecs[startWeapon].mag):currentMode.ammo;
+    const startReserve=currentMode.hardcore?(startWeapon==="FACA"?Infinity:weaponSpecs[startWeapon].mag*4):currentMode.reserve;
+    player={...findOpenPoint(center,0,[],4),angle:Math.random()*Math.PI*2,health:cfg.health,maxHealth:cfg.health,armor:100,maxArmor:100,weapon:startWeapon,ammo:startAmmo,reserve:startReserve,mag:weaponSpecs[startWeapon].mag,deadAt:null};
+    inventory=[{type:startWeapon,ammo:startAmmo,reserve:startReserve}];activeSlot=0;
     const occupied=[player];
     bots=Array.from({length:currentMode.botCount},(_,i)=>{
       const position=findBotSpawn(occupied,player);
@@ -333,6 +388,11 @@
     $("activeModeName").textContent=currentMode.name;
     updateHud();showToast(`${currentMode.name} — ${currentMode.botCount} BOTS`);playTone(240,.16,"triangle",.06);enterFullscreen();lockPointer();requestAnimationFrame(frame);
   }
+  function updateFlashlightStatus(){
+    const status=$("flashlightStatus");
+    status.textContent=flashlightOn?"🔦 LANTERNA LIGADA · L":"🔦 LANTERNA DESLIGADA · L";
+    status.classList.toggle("off",!flashlightOn);
+  }
   function playTone(freq=240,duration=.08,type="square",volume=.035){
     if(!soundOn)return;
     try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();if(audio.state==="suspended")audio.resume().catch(error=>console.warn("Não foi possível iniciar o áudio:",error));const osc=audio.createOscillator(),gain=audio.createGain();osc.type=type;osc.frequency.value=freq;gain.gain.setValueAtTime(volume,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+duration);osc.connect(gain);gain.connect(audio.destination);osc.start();osc.stop(audio.currentTime+duration)}catch(e){console.warn("Áudio indisponível:",e)}
@@ -342,7 +402,7 @@
     try{
       audio=audio||new (window.AudioContext||window.webkitAudioContext)();
       if(audio.state==="suspended")audio.resume().catch(error=>console.warn("Não foi possível iniciar o áudio:",error));
-      const now=audio.currentTime,shotgun=weapon==="ESCOPETA"||weapon==="M1014",sniper=weapon==="SNIPER";
+      const now=audio.currentTime,shotgun=SHOTGUN_WEAPONS.has(weapon),sniper=weapon==="SNIPER";
       const frequency=sniper?72:shotgun?88:weapon==="FACA"?190:118;
       const volume=isBot?.045:.11,duration=sniper?.22:shotgun?.17:.105;
       const oscillator=audio.createOscillator(),toneGain=audio.createGain();
@@ -376,9 +436,10 @@
     }return {distance:20,side:0,wallX:0};
   }
   function renderWorld(now){
-    const sky=ctx.createLinearGradient(0,0,0,H*.5);sky.addColorStop(0,"#82978c");sky.addColorStop(1,"#b5b39a");
+    const theme=WORLD_THEMES[currentMode.hardcore?"hardcore":Object.keys(MODES).find(key=>MODES[key]===currentMode)||"normal"]||WORLD_THEMES.normal;
+    const sky=ctx.createLinearGradient(0,0,0,H*.5);sky.addColorStop(0,theme.sky[0]);sky.addColorStop(1,theme.sky[1]);
     ctx.fillStyle=sky;ctx.fillRect(0,0,W,H/2);
-    const floor=ctx.createLinearGradient(0,H/2,0,H);floor.addColorStop(0,"#59604a");floor.addColorStop(1,"#292e24");ctx.fillStyle=floor;ctx.fillRect(0,H/2,W,H/2);
+    const floor=ctx.createLinearGradient(0,H/2,0,H);floor.addColorStop(0,theme.floor[0]);floor.addColorStop(1,theme.floor[1]);ctx.fillStyle=floor;ctx.fillRect(0,H/2,W,H/2);
     const step=2;
     const focal=focalLength();
     for(let x=0;x<W;x+=step){
@@ -387,7 +448,7 @@
       const wallH=Math.min(H*2,H/d),top=(H-wallH)/2;
       const stripe=(Math.floor(hit.wallX*8)%2===0)?1:.78,side=hit.side===1?.75:1;
       const fog=Math.max(.25,1-d/17),shade=stripe*side*fog;
-      const r=Math.floor(119*shade),g=Math.floor(119*shade),b=Math.floor(101*shade);
+      const r=Math.floor(theme.wall[0]*shade),g=Math.floor(theme.wall[1]*shade),b=Math.floor(theme.wall[2]*shade);
       ctx.fillStyle=`rgb(${r},${g},${b})`;ctx.fillRect(x,top,step+1,wallH);
       const seam=(Math.floor(hit.wallX*4)%4===0);
       if(seam){ctx.fillStyle=`rgba(18,23,17,${.2*fog})`;ctx.fillRect(x,top,step+1,wallH)}
@@ -396,7 +457,34 @@
     // horizon detail
     ctx.fillStyle="rgba(226,219,179,.32)";
     for(let i=0;i<7;i++){const x=((i*113+40)%W),y=H*.25+(i%3)*7;ctx.fillRect(x,y,28+(i%4)*9,1)}
-    renderObjects(now);renderIncomingShots(now);renderWeapon(now);renderAimReticle();renderMinimap();renderPlayerDeath(now);
+    renderObjects(now);renderIncomingShots(now);renderWeapon(now);renderAimReticle();renderMinimap();renderPlayerDeath(now);renderFlashlight();
+  }
+  function renderFlashlight(){
+    if(!currentMode.hardcore)return;
+    lightingCtx.save();
+    lightingCtx.clearRect(0,0,W,H);
+    lightingCtx.globalCompositeOperation="source-over";
+    lightingCtx.fillStyle="rgba(1,3,9,.7)";
+    lightingCtx.fillRect(0,0,W,H);
+    if(flashlightOn){
+      lightingCtx.globalCompositeOperation="destination-out";
+      lightingCtx.beginPath();
+      lightingCtx.moveTo(W*.39,H*.38);
+      lightingCtx.lineTo(W*.08,H);
+      lightingCtx.lineTo(W*.92,H);
+      lightingCtx.lineTo(W*.61,H*.38);
+      lightingCtx.closePath();
+      lightingCtx.clip();
+      const beam=lightingCtx.createRadialGradient(W*.5,H*.48,8,W*.5,H*.48,W*.72);
+      beam.addColorStop(0,"rgba(255,255,255,.94)");
+      beam.addColorStop(.35,"rgba(255,255,255,.82)");
+      beam.addColorStop(.75,"rgba(255,255,255,.42)");
+      beam.addColorStop(1,"rgba(255,255,255,0)");
+      lightingCtx.fillStyle=beam;
+      lightingCtx.fillRect(0,0,W,H);
+    }
+    lightingCtx.restore();
+    ctx.drawImage(lightingCanvas,0,0);
   }
   function project(obj){
     const dx=obj.x-player.x,dy=obj.y-player.y,d=Math.hypot(dx,dy),a=angleDiff(Math.atan2(dy,dx),player.angle);
@@ -508,12 +596,12 @@
       ctx.fillStyle="#c6d0cc";ctx.beginPath();ctx.moveTo(-3,-2);ctx.lineTo(3,-48);ctx.lineTo(10,-61);ctx.lineTo(9,-4);ctx.closePath();ctx.fill();
       ctx.fillStyle="#eef7e8";ctx.fillRect(6,-45,2,31);ctx.restore();ctx.restore();recoil=Math.max(0,recoil-.05);return;
     }
-    const sniper=player.weapon==="SNIPER",shotgun=player.weapon==="ESCOPETA"||player.weapon==="M1014";
+    const sniper=player.weapon==="SNIPER",shotgun=SHOTGUN_WEAPONS.has(player.weapon);
     ctx.fillStyle="#181b17";
     ctx.fillRect(sniper?-24:-12,sniper?-187:-173,sniper?45:shotgun?30:19,sniper?62:shotgun?40:49);
     ctx.fillRect(-18,-141,32,28);
     if(sniper){ctx.fillStyle="#252920";ctx.fillRect(-3,-197,17,14);ctx.fillRect(7,-181,22,6)}
-    if(shotgun){ctx.fillStyle="#5b594b";ctx.fillRect(-9,-166,23,22)}
+    if(shotgun){ctx.fillStyle="#5b594b";ctx.fillRect(-9,-166,23,22);if(player.weapon==="DOIS CANOS"){ctx.fillStyle="#252820";ctx.fillRect(-13,-175,5,39);ctx.fillRect(-5,-175,5,39)}}
     ctx.fillStyle=weaponSpecs[player.weapon].color;ctx.fillRect(-4,-158,4,8);
     ctx.fillStyle="#34382f";ctx.beginPath();ctx.moveTo(-20,-92);ctx.lineTo(5,-88);ctx.lineTo(22,-30);ctx.lineTo(2,-23);ctx.fill();
     if(now<lastShot+65){ctx.fillStyle="rgba(255,214,106,.8)";ctx.beginPath();ctx.moveTo(-7,-173);ctx.lineTo(3,-200-Math.random()*12);ctx.lineTo(10,-171);ctx.fill()}
@@ -731,7 +819,7 @@
     if(now-lastShot<spec.rate)return;
     const isKnife=player.weapon==="FACA";
     if(!isKnife&&player.ammo<=0){showToast("SEM MUNIÇÃO — PRESSIONE R");playTone(110,.08);return}
-    const isShotgun=player.weapon==="ESCOPETA"||player.weapon==="M1014";
+    const isShotgun=SHOTGUN_WEAPONS.has(player.weapon);
     lastShot=now;if(!isKnife)player.ammo--;else knifeSwingUntil=now+260;recoil=1;if(isKnife)playTone(260,.12,"triangle",.07);else playGunshot(player.weapon);
     let target=null,best=Infinity;
     for(const b of bots){
@@ -743,7 +831,7 @@
       if(d>spec.range||along<=0||across>halfWidth||lineBlocked(player,b))continue;
       if(d<best){best=d;target=b}
     }
-    if(target){const pellets=isShotgun?3:1;target.health-=spec.damage*pellets;target.hitUntil=now+140;hitUntil=now+170;$("crosshair").classList.add("hit");setTimeout(()=>$("crosshair").classList.remove("hit"),180);playTone(470,.06,"triangle",.04);
+    if(target){const falloff=isShotgun?Math.max(.28,1-Math.max(0,best-4)/(spec.range-4)*.72):1;target.health-=spec.damage*(isShotgun?spec.pellets:1)*falloff;target.hitUntil=now+140;hitUntil=now+170;$("crosshair").classList.add("hit");setTimeout(()=>$("crosshair").classList.remove("hit"),180);playTone(470,.06,"triangle",.04);
       if(target.health<=0){target.health=0;target.alive=false;target.deathAt=now;score++;player.reserve+=Math.ceil(Math.random()*9+5);player.health=Math.min(player.maxHealth,player.health+7);showToast("BOT ELIMINADO  +7 VIDA");}
     }
     updateHud();
@@ -831,10 +919,11 @@
   $("controlsBtn").addEventListener("click",()=>$("controls").classList.add("open"));
   $("closeControls").addEventListener("click",()=>$("controls").classList.remove("open"));
   $("soundToggle").addEventListener("change",e=>soundOn=e.target.checked);
+  gameRoot.dataset.mode=$("gameMode").value;
   for(const card of document.querySelectorAll(".mode-card"))card.addEventListener("click",()=>{
     const mode=card.dataset.mode;
     $("gameMode").value=mode;
-  gameRoot.dataset.mode=mode;
+    gameRoot.dataset.mode=mode;
     for(const option of document.querySelectorAll(".mode-card"))option.setAttribute("aria-pressed",String(option===card));
     $("modeDescription").textContent=MODE_DESCRIPTIONS[mode]||MODE_DESCRIPTIONS.normal;
   });
@@ -857,6 +946,7 @@
     keys[k]=true;
     if(k==="escape"&&running)pause();
     if(k==="f")toggleFullscreen();
+    if(k==="l"&&running&&!paused&&currentMode.hardcore&&!e.repeat){flashlightOn=!flashlightOn;updateFlashlightStatus();showToast(flashlightOn?"LANTERNA LIGADA":"LANTERNA DESLIGADA")}
     if(k==="e"&&running&&!paused)collect();
     if(k==="r"&&running&&!paused)reload();
     if(k>="1"&&k<="4"&&running&&!paused)selectWeapon(Number(k)-1);
