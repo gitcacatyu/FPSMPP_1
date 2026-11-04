@@ -81,7 +81,7 @@ function createGame() {
   const window = { addEventListener() {} };
   const instrumentedScript = script.replace(
     /\n\}\)\(\);\s*$/,
-    "\nwindow.__gameTest={startGame,shoot,renderWorld,lineBlocked,weaponSpecs,worldThemes:WORLD_THEMES,get player(){return player},get bots(){return bots},get pickups(){return pickups},get flashlightOn(){return flashlightOn}};})();",
+    "\nwindow.__gameTest={startGame,shoot,update,endGame,damagePlayer,renderWorld,lineBlocked,weaponSpecs,worldThemes:WORLD_THEMES,get player(){return player},get bots(){return bots},get targets(){return targets},get explosions(){return explosions},get incomingShots(){return incomingShots},get pickups(){return pickups},get playerTeam(){return playerTeam},get currentMode(){return currentMode},get teamScores(){return teamScores},get playerStats(){return playerStats},get zoneTimer(){return zoneTimer},get flashlightOn(){return flashlightOn}};})();",
   );
   assert.notEqual(instrumentedScript, script, "game test hook must be attached");
   vm.runInNewContext(instrumentedScript, {
@@ -106,7 +106,7 @@ function createGame() {
   return { game: window.__gameTest, document, elements };
 }
 
-test("all game modes create their configured bot counts and keep bots on M4A1", () => {
+test("existing game modes create their configured bot counts and keep bots on M4A1", () => {
   const { game, elements } = createGame();
   const modes = {
     normal: 18,
@@ -126,16 +126,301 @@ test("all game modes create their configured bot counts and keep bots on M4A1", 
   }
 });
 
-test("each mode uses a distinct world palette", () => {
+test("Pistoleiros limits the available weapons and bot loadouts to pistols", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "pistoleiros";
+  game.startGame();
+
+  assert.equal(game.bots.length, 18);
+  assert.equal(game.player.ammo, game.weaponSpecs.PISTOLA.mag);
+  assert.equal(game.player.reserve, game.weaponSpecs.PISTOLA.mag * 4);
+  assert.ok(game.bots.every(bot => ["PISTOLA", "REVOLVER", "GLOCK", "PISTOLA 38"].includes(bot.weapon)));
+  assert.equal(
+    [...game.pickups.filter(item => game.weaponSpecs[item.type]).map(item => item.type)].sort().join(","),
+    ["GLOCK", "PISTOLA 38", "REVOLVER"].sort().join(","),
+  );
+});
+
+test("Bazooca mode locks the player to the bazooka with 15 bots", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "bazooka";
+  game.startGame();
+
+  assert.equal(game.bots.length, 15);
+  assert.equal(game.player.weapon, "BAZUCA");
+  assert.equal(game.player.ammo, 1);
+  assert.equal(game.player.reserve, 14);
+  assert.equal(game.currentMode.locked, true);
+  assert.equal(game.pickups.filter(item => game.weaponSpecs[item.type]).length, 0);
+});
+
+test("Bazooka blast damages multiple bots in its radius", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "bazooka";
+  game.startGame();
+  const pair = findOpenPair(game, 6);
+  game.player.x = pair.start.x;
+  game.player.y = pair.start.y;
+  game.player.angle = Math.atan2(pair.target.y - pair.start.y, pair.target.x - pair.start.x);
+  const direction = game.player.angle + Math.PI / 2;
+  const first = game.bots[0], second = game.bots[1];
+  for (const bot of game.bots) bot.alive = false;
+  Object.assign(first, pair.target, { alive: true, health: 100 });
+  Object.assign(second, {
+    x: pair.target.x + Math.cos(direction) * .8,
+    y: pair.target.y + Math.sin(direction) * .8,
+    alive: true,
+    health: 100,
+  });
+
+  game.shoot();
+
+  assert.equal(first.alive, false);
+  assert.equal(second.alive, false);
+  assert.equal(game.explosions.length, 1);
+});
+
+test("team mode assigns 20 bots to each side and supports choosing the blue team", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "teams";
+  elements.get("playerTeam").value = "blue";
+  game.startGame();
+
+  assert.equal(game.bots.length, 40);
+  assert.equal(game.bots.filter(bot => bot.team === "red").length, 20);
+  assert.equal(game.bots.filter(bot => bot.team === "blue").length, 20);
+  assert.equal(game.playerTeam, "blue");
+  assert.equal(game.player.team, "blue");
+  assert.match(elements.get("activeModeName").textContent, /AZUL/);
+});
+
+test("team mode scatters every weapon, including the player's starting weapon", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "teams";
+  game.startGame();
+
+  const scatteredWeapons = game.pickups
+    .filter(pickup => game.weaponSpecs[pickup.type])
+    .map(pickup => pickup.type);
+  assert.deepEqual([...scatteredWeapons].sort(), Object.keys(game.weaponSpecs).sort());
+  assert.equal(new Set(scatteredWeapons).size, scatteredWeapons.length);
+});
+
+test("team mode prevents the player from damaging an allied bot", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "teams";
+  game.startGame();
+  const ally = game.bots[0];
+  for (const bot of game.bots) bot.alive = false;
+  ally.alive = true;
+  ally.team = game.playerTeam;
+  ally.x = game.player.x + Math.cos(game.player.angle) * 6;
+  ally.y = game.player.y + Math.sin(game.player.angle) * 6;
+
+  game.shoot();
+
+  assert.equal(ally.health, 100);
+});
+
+test("team bots do not attack allies and can fire on the opposing team", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "teams";
+  game.startGame();
+  for (const bot of game.bots) bot.alive = false;
+  const ally = game.bots[0], enemy = game.bots[20];
+  Object.assign(ally, {
+    x: game.player.x + Math.cos(game.player.angle) * 5,
+    y: game.player.y + Math.sin(game.player.angle) * 5,
+    team: game.playerTeam,
+    alive: true,
+    cooldown: -1,
+  });
+  game.update(.05, 2000);
+  assert.equal(game.player.health, 100, "friendly bots must not target their teammate");
+
+  ally.alive = false;
+  const pair = findOpenPair(game, 5);
+  game.player.x = pair.start.x;
+  game.player.y = pair.start.y;
+  game.player.angle = Math.atan2(pair.target.y - pair.start.y, pair.target.x - pair.start.x);
+  Object.assign(enemy, {
+    x: pair.target.x,
+    y: pair.target.y,
+    team: game.playerTeam === "red" ? "blue" : "red",
+    alive: true,
+    cooldown: -1,
+    weapon: "M4A1",
+  });
+  enemy.angle = game.player.angle + Math.PI;
+  assert.equal(game.lineBlocked(game.player, enemy), false);
+  game.update(.05, 2100);
+  assert.ok(game.incomingShots.length > 0, "enemy bots should fire at the player");
+});
+
+test("timed team match gives both sides unlimited respawns and lasts five minutes", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "teams";
+  elements.get("teamMatchType").value = "timed";
+  game.startGame();
+  assert.equal(game.currentMode.timed, true);
+  assert.equal(game.zoneTimer, 300);
+  for (const bot of game.bots) bot.cooldown = 100;
+  game.bots[0].alive = false;
+  game.bots[0].health = 0;
+  game.bots[0].deathAt = 0;
+  game.player.health = 0;
+  game.player.deadAt = 500;
+
+  game.update(.05, 1300);
+
+  assert.equal(game.player.deadAt, 500, "player remains in the death animation");
+  assert.equal(game.bots[0].alive, true, "bots respawn after dying");
+  assert.equal(game.bots[0].health, 100);
+
+  game.update(.05, 1800);
+  assert.equal(game.player.deadAt, null, "player respawns after the death animation");
+  assert.equal(game.player.health, game.player.maxHealth);
+});
+
+test("timed team match awards eliminations to the player's team", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "teams";
+  elements.get("teamMatchType").value = "timed";
+  game.startGame();
+  const enemy = game.bots[20];
+  for (const bot of game.bots) bot.alive = false;
+  const pair = findOpenPair(game, 5);
+  game.player.x = pair.start.x;
+  game.player.y = pair.start.y;
+  game.player.angle = Math.atan2(pair.target.y - pair.start.y, pair.target.x - pair.start.x);
+  Object.assign(enemy, pair.target, {
+    team: "blue",
+    alive: true,
+    health: 10,
+  });
+  game.player.weapon = "M4A1";
+  game.player.ammo = game.weaponSpecs.M4A1.mag;
+
+  game.shoot();
+
+  assert.equal(enemy.alive, false);
+  assert.equal(game.teamScores.red, 1);
+});
+
+test("timed team match ends after five minutes and awards the side with more eliminations", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "teams";
+  elements.get("teamMatchType").value = "timed";
+  game.startGame();
+  game.teamScores.red = 7;
+  game.teamScores.blue = 9;
+
+  game.update(300, 10000);
+
+  assert.match(elements.get("endTitle").textContent, /AZUL/);
+  assert.match(elements.get("endMessage").textContent, /Vermelho 7 × 9 Azul/);
+});
+
+test("team match end screen shows the player's eliminations, deaths, accuracy, and K/D", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "teams";
+  elements.get("teamMatchType").value = "timed";
+  game.startGame();
+  const enemy = game.bots[20];
+  for (const bot of game.bots) bot.alive = false;
+  const pair = findOpenPair(game, 5);
+  game.player.x = pair.start.x;
+  game.player.y = pair.start.y;
+  game.player.angle = Math.atan2(pair.target.y - pair.start.y, pair.target.x - pair.start.x);
+  Object.assign(enemy, pair.target, { team: "blue", alive: true, health: 10 });
+  game.player.weapon = "M4A1";
+  game.player.ammo = game.weaponSpecs.M4A1.mag;
+
+  game.shoot();
+  game.damagePlayer(1000, { team: "blue" }, 2100);
+  game.endGame(true);
+
+  assert.equal(game.playerStats.kills, 1);
+  assert.equal(game.playerStats.deaths, 1);
+  assert.equal(game.playerStats.shots, 1);
+  assert.equal(game.playerStats.hits, 1);
+  assert.equal(elements.get("playerStats").hidden, false);
+  assert.equal(elements.get("statsKills").textContent, 1);
+  assert.equal(elements.get("statsDeaths").textContent, 1);
+  assert.equal(elements.get("statsAccuracy").textContent, "100%");
+  assert.equal(elements.get("statsKdr").textContent, "1.00");
+});
+
+test("team bazooka accuracy counts at most one hit per rocket", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "teams";
+  elements.get("teamMatchType").value = "timed";
+  game.startGame();
+  const enemy = game.bots[20];
+  const nearbyEnemy = game.bots[21];
+  for (const bot of game.bots) bot.alive = false;
+  const pair = findOpenPair(game, 5);
+  game.player.x = pair.start.x;
+  game.player.y = pair.start.y;
+  game.player.angle = Math.atan2(pair.target.y - pair.start.y, pair.target.x - pair.start.x);
+  Object.assign(enemy, pair.target, { team: "blue", alive: true, health: 1000 });
+  Object.assign(nearbyEnemy, { x: enemy.x + 0.5, y: enemy.y, team: "blue", alive: true, health: 1000 });
+  game.player.weapon = "BAZUCA";
+  game.player.ammo = 1;
+
+  game.shoot();
+
+  assert.equal(game.playerStats.shots, 1);
+  assert.equal(game.playerStats.hits, 1);
+});
+
+test("training presets configure targets, bot weapons, and passive bots", () => {
+  const { game, elements } = createGame();
+  const presets = [
+    ["sniping", 0, 8, 0],
+    ["machinegun", 0, 8, 8],
+    ["normal", 5, 8, 0],
+    ["knife", 10, 8, 0],
+    ["pistoleirando", 10, 8, 8],
+    ["peibaaa", 10, 12, 6],
+  ];
+
+  elements.get("gameMode").value = "training";
+  for (const [option, bots, targets, movingTargets] of presets) {
+    elements.get("trainingOption").value = option;
+    game.startGame();
+    assert.equal(game.bots.length, bots, `${option} bot count`);
+    assert.equal(game.targets.length, targets, `${option} target count`);
+    assert.equal(game.targets.filter(target => target.moving).length, movingTargets, `${option} moving targets`);
+  }
+  elements.get("trainingOption").value = "knife";
+  game.startGame();
+  assert.equal(game.player.ammo, Infinity);
+  assert.ok(game.bots.every(bot => bot.weapon === "FACA" && bot.passive));
+  elements.get("trainingOption").value = "pistoleirando";
+  game.startGame();
+  assert.ok(game.bots.every(bot => bot.weapon === "FACA" && !bot.passive));
+  elements.get("trainingOption").value = "peibaaa";
+  game.startGame();
+  assert.equal(game.player.weapon, "ESCOPETA");
+  assert.ok(game.bots.every(bot => bot.weapon === "PISTOLA"));
+  assert.equal(
+    [...game.pickups.filter(item => game.weaponSpecs[item.type]).map(item => item.type)].sort().join(","),
+    ["M1014", "CALIBRE 12", "DOIS CANOS"].sort().join(","),
+  );
+});
+
+test("each game mode uses a distinct world palette", () => {
   const { game } = createGame();
   const palettes = Object.values(game.worldThemes)
     .map(theme => JSON.stringify([theme.sky, theme.floor, theme.wall]));
-  assert.equal(new Set(palettes).size, 6);
+  assert.equal(new Set(palettes).size, 10);
 });
 
 test("Hardcore offers every weapon, applies hard difficulty, and places other weapons once", () => {
   const { game, elements } = createGame();
-  const options = [...html.matchAll(/<option>([^<]+)<\/option>/g)].map(([, name]) => name);
+  const loadout = html.match(/<select id="hardcoreWeapon">([\s\S]*?)<\/select>/)[1];
+  const options = [...loadout.matchAll(/<option>([^<]+)<\/option>/g)].map(([, name]) => name);
   const weaponNames = Object.keys(game.weaponSpecs);
 
   assert.deepEqual(options, weaponNames, "Hardcore list includes every weapon type");
@@ -156,6 +441,56 @@ test("Hardcore offers every weapon, applies hard difficulty, and places other we
     assert.equal(placedWeapons.length, weaponNames.length - 1, "all other weapons are placed");
     assert.ok(!placedWeapons.includes(weapon), "the selected weapon is not duplicated as loot");
   }
+});
+
+function findBlockedPair(game) {
+  for (let y = 2; y < 45; y++) {
+    for (let x = 2; x < 45; x++) {
+      const start = { x: x + 0.5, y: y + 0.5 };
+      for (let distance = 4; distance <= 20; distance += 0.5) {
+        for (let angle = -0.8; angle <= 0.8; angle += 0.08) {
+          const target = {
+            x: start.x + distance * Math.cos(angle),
+            y: start.y + distance * Math.sin(angle),
+          };
+          if (target.x > 1 && target.y > 1 && target.x < 47 && target.y < 47
+            && game.lineBlocked(start, target)) {
+            return { start, target };
+          }
+        }
+      }
+    }
+  }
+  throw new Error("no blocked path found");
+}
+
+test("AWM shots penetrate walls", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "training";
+  elements.get("trainingOption").value = "sniping";
+  game.startGame();
+  const pair = findBlockedPair(game);
+  game.player.x = pair.start.x;
+  game.player.y = pair.start.y;
+  game.player.angle = Math.atan2(pair.target.y - pair.start.y, pair.target.x - pair.start.x);
+  game.player.weapon = "AWM";
+  game.player.ammo = game.weaponSpecs.AWM.mag;
+  const bot = {
+    ...pair.target,
+    angle: game.player.angle + Math.PI,
+    health: 100,
+    alive: true,
+    deathAt: null,
+    deathDirection: 1,
+    hitUntil: 0,
+    id: 0,
+    weapon: "FACA",
+  };
+  game.bots.push(bot);
+
+  assert.equal(game.lineBlocked(game.player, bot), true);
+  game.shoot();
+  assert.equal(bot.alive, false);
 });
 
 test("Hardcore flashlight starts on, toggles with L, and renders", () => {

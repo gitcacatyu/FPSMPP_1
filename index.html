@@ -74,8 +74,22 @@
     .game[data-mode="knife"] #menu{--mode-accent:#65e4c4;--mode-glow:rgba(45,215,179,.2);background:radial-gradient(ellipse at 82% 48%,rgba(21,101,83,.32),transparent 45%),linear-gradient(90deg,rgba(5,14,13,.98) 0%,rgba(7,18,16,.8) 48%,rgba(7,22,18,.12) 100%),linear-gradient(0deg,rgba(6,13,12,.66),transparent 44%)}
     .game[data-mode="knife"] #menu:after{content:"CORPO A CORPO"}
     .game[data-mode="hardcore"]{--hud-accent:#ff655c}
+    .game[data-mode="pistoleiros"]{--hud-accent:#f3b45e}
+    .game[data-mode="training"]{--hud-accent:#65e4c4}
+    .game[data-mode="bazooka"]{--hud-accent:#ff9b52}
+    .game[data-mode="teams"]{--hud-accent:#ff6565}
     .game[data-mode="hardcore"] #menu{--mode-accent:#ff655c;--mode-glow:rgba(255,48,38,.22);background:radial-gradient(ellipse at 82% 48%,rgba(128,22,25,.38),transparent 45%),linear-gradient(90deg,rgba(18,5,7,.99) 0%,rgba(24,7,9,.82) 48%,rgba(27,8,11,.16) 100%),linear-gradient(0deg,rgba(18,4,7,.72),transparent 44%)}
     .game[data-mode="hardcore"] #menu:after{content:"SEM PIEDADE"}
+    .game[data-mode="pistoleiros"] #menu{--mode-accent:#f3b45e;--mode-glow:rgba(243,180,94,.2)}
+    .game[data-mode="pistoleiros"] #menu:after{content:"PISTOLEIROS"}
+    .game[data-mode="training"] #menu{--mode-accent:#65e4c4;--mode-glow:rgba(45,215,179,.2)}
+    .game[data-mode="training"] #menu:after{content:"TREINO"}
+    .game[data-mode="bazooka"] #menu{--mode-accent:#ff9b52;--mode-glow:rgba(255,132,64,.24)}
+    .game[data-mode="bazooka"] #menu:after{content:"BAZOCA"}
+    .game[data-mode="teams"] #menu{--mode-accent:#ff6565;--mode-glow:rgba(255,65,65,.2)}
+    .game[data-mode="teams"] #menu:after{content:"EQUIPE"}
+    .game[data-mode="teams"][data-team="blue"]{--hud-accent:#5b9eff}
+    .game[data-mode="teams"][data-team="red"]{--hud-accent:#f05b5b}
     .game[data-mode="normal"] #menu:after{content:"SOBREVIVA"}
     .menu-content{width:min(490px,100%);padding:34px 0}
     .eyebrow{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.24em;color:var(--mode-accent)}
@@ -104,6 +118,10 @@
     .mode-card[data-mode="shotgun"]:before{background:radial-gradient(circle at 88% 50%,rgba(239,133,133,.25) 0 2px,transparent 3px 11px,rgba(239,133,133,.18) 12px 14px,transparent 15px 25px,rgba(239,133,133,.13) 26px 28px,transparent 29px),linear-gradient(120deg,rgba(133,37,43,.2),transparent 75%)}
     .mode-card[data-mode="knife"]:before{background:linear-gradient(125deg,transparent 0 58%,rgba(101,228,196,.2) 59% 60%,transparent 61%),linear-gradient(45deg,rgba(25,112,92,.2),transparent 68%)}
     .mode-card[data-mode="hardcore"]:before{background:repeating-linear-gradient(135deg,transparent 0 12px,rgba(255,101,92,.13) 13px 15px),linear-gradient(90deg,rgba(115,20,24,.28),transparent 78%)}
+    .mode-card[data-mode="pistoleiros"]:before{background:repeating-linear-gradient(90deg,transparent 0 15px,rgba(243,180,94,.12) 16px 18px),linear-gradient(120deg,rgba(167,103,34,.24),transparent 75%)}
+    .mode-card[data-mode="training"]:before{background:radial-gradient(circle at 88% 50%,rgba(101,228,196,.22) 0 3px,transparent 4px 13px,rgba(101,228,196,.16) 14px 16px,transparent 17px 28px),linear-gradient(120deg,rgba(25,112,92,.2),transparent 75%)}
+    .mode-card[data-mode="bazooka"]:before{background:repeating-linear-gradient(145deg,transparent 0 16px,rgba(255,155,82,.15) 17px 21px),linear-gradient(120deg,rgba(138,66,23,.3),transparent 75%)}
+    .mode-card[data-mode="teams"]:before{background:linear-gradient(110deg,rgba(245,65,65,.2) 0 48%,transparent 49% 51%,rgba(75,142,255,.2) 52% 100%)}
     .mode-card:hover{border-color:rgba(213,250,86,.65);transform:translateY(-2px)}
     .mode-card[aria-pressed="true"]{border-color:var(--mode-accent);background:linear-gradient(145deg,color-mix(in srgb,var(--mode-accent) 24%,#20241b),rgba(17,21,13,.98));box-shadow:inset 3px 0 var(--mode-accent),0 0 18px var(--mode-glow)}
     .mode-card:focus-visible{outline:2px solid var(--mode-accent);outline-offset:2px}
@@ -114,6 +132,10 @@
     .game[data-mode="hardcore"] .hardcore-loadout{display:block}
     .hardcore-loadout label{display:block;margin-bottom:7px;color:#ff938b;font-size:10px;font-weight:800;letter-spacing:.16em}
     .hardcore-loadout select{width:100%;padding:10px 12px;background:#171311;border:1px solid rgba(255,101,92,.58);color:#fff}
+    .training-loadout{display:none;width:min(100%,390px);margin:-4px 0 14px;padding:12px;background:rgba(8,10,9,.82);border:1px solid rgba(101,228,196,.42)}
+    .game[data-mode="training"] .training-loadout{display:block}
+    .training-loadout label{display:block;margin-bottom:7px;color:#65e4c4;font-size:10px;font-weight:800;letter-spacing:.16em}
+    .training-loadout select{width:100%;padding:10px 12px;background:#111917;border:1px solid rgba(101,228,196,.58);color:#fff}
     .flashlight-status{position:absolute;top:62px;right:28px;padding:7px 10px;border:1px solid rgba(255,255,255,.25);background:rgba(5,8,10,.72);color:#ffe7b0;font-size:10px;font-weight:800;letter-spacing:.12em}
     .flashlight-status.off{color:#969a9b;border-color:rgba(255,255,255,.12)}
     .game:not([data-mode="hardcore"]) .flashlight-status{display:none}
@@ -122,6 +144,13 @@
     .game[data-mode="shotgun"] .mode-card[aria-pressed="true"]{background:radial-gradient(circle at 88% 50%,rgba(239,85,85,.28),transparent 44%),linear-gradient(145deg,rgba(102,29,34,.72),rgba(25,10,12,.98))}
     .game[data-mode="knife"] .mode-card[aria-pressed="true"]{background:linear-gradient(125deg,rgba(23,104,86,.58) 0 48%,rgba(9,28,25,.96) 49% 100%)}
     .game[data-mode="hardcore"] .mode-card[aria-pressed="true"]{background:repeating-linear-gradient(135deg,rgba(116,24,28,.46) 0 8px,rgba(28,9,11,.96) 8px 16px)}
+    .game[data-mode="bazooka"] .mode-card[aria-pressed="true"]{background:repeating-linear-gradient(135deg,rgba(143,66,20,.48) 0 9px,rgba(32,18,11,.95) 9px 18px)}
+    .game[data-mode="teams"] .mode-card[aria-pressed="true"]{background:linear-gradient(110deg,rgba(139,36,39,.45) 0 48%,rgba(18,20,28,.92) 49% 51%,rgba(35,76,138,.5) 52% 100%)}
+    .team-loadout{display:none;width:min(100%,390px);margin:-4px 0 14px;padding:12px;background:rgba(8,10,9,.82);border:1px solid rgba(255,101,101,.42)}
+    .game[data-mode="teams"] .team-loadout{display:block}
+    .team-loadout label{display:block;margin-bottom:7px;color:#ff9a9a;font-size:10px;font-weight:800;letter-spacing:.16em}
+    .team-loadout select{width:100%;padding:10px 12px;background:#171311;border:1px solid rgba(255,101,101,.58);color:white}
+    .team-loadout .team-choice-label{margin-top:11px}
     @media(prefers-reduced-motion:reduce){.overlay:before{animation:none}.overlay,.mode-card{transition:none}}
     @media(max-width:680px){.overlay:before{right:-90px;width:280px;opacity:.35}.overlay:after{right:-50px;font-size:42px;opacity:.07}}
     .mode-description{min-height:30px;margin:8px 0 0;color:#a5a89d;font-size:11px;line-height:1.5}
@@ -129,9 +158,14 @@
     .setting-row input[type=checkbox]{accent-color:var(--acid)}
     .modal{position:absolute;z-index:8;inset:0;display:none;align-items:center;justify-content:center;text-align:center;background:rgba(8,10,8,.82);backdrop-filter:blur(5px);padding:20px}
     .modal.open{display:flex}
-    .modal-card{max-width:480px}
+    .modal-card{width:min(620px,100%);max-width:620px}
     .modal h2{font-family:"Arial Narrow",Impact,sans-serif;font-size:clamp(48px,8vw,82px);line-height:.9;margin:12px 0}
     .modal p{color:#c3c6b9;line-height:1.7;margin-bottom:24px}
+    .player-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:18px 0 24px}
+    .player-stat{padding:12px 8px;border:1px solid var(--line);background:rgba(255,255,255,.035)}
+    .player-stat-value{display:block;color:var(--acid);font-family:"Arial Narrow",Impact,sans-serif;font-size:25px;font-weight:800}
+    .player-stat-label{display:block;margin-top:4px;color:#b5b9ab;font-size:9px;font-weight:700;letter-spacing:.1em}
+    @media(max-width:480px){.player-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
     .controls{position:absolute;z-index:7;inset:0;display:none;justify-content:center;align-items:center;padding:20px;background:rgba(7,9,7,.76)}
     .controls.open{display:flex}
     .controls-card{width:min(460px,100%);padding:25px;border:1px solid var(--line);background:#121610}
@@ -187,13 +221,40 @@
             <button type="button" class="mode-card" data-mode="shotgun" aria-pressed="false"><span class="mode-card-count">14 BOTS</span><span class="mode-card-name">Peiba!</span><span class="mode-card-detail">Escopetas · alcance ampliado</span></button>
             <button type="button" class="mode-card" data-mode="knife" aria-pressed="false"><span class="mode-card-count">10 BOTS</span><span class="mode-card-name">Afiado!</span><span class="mode-card-detail">Só a faca · combate próximo</span></button>
             <button type="button" class="mode-card" data-mode="hardcore" aria-pressed="false"><span class="mode-card-count">20 BOTS</span><span class="mode-card-name">Hardcore</span><span class="mode-card-detail">Inimigos fortes · cenário noturno</span></button>
+            <button type="button" class="mode-card" data-mode="pistoleiros" aria-pressed="false"><span class="mode-card-count">18 BOTS</span><span class="mode-card-name">Pistoleiros</span><span class="mode-card-detail">Pistola · revólver · Glock · .38</span></button>
+            <button type="button" class="mode-card" data-mode="training" aria-pressed="false"><span class="mode-card-count">6 TREINOS</span><span class="mode-card-name">Treinar é bom!</span><span class="mode-card-detail">Alvos, armas e desafios de treino</span></button>
+            <button type="button" class="mode-card" data-mode="bazooka" aria-pressed="false"><span class="mode-card-count">15 BOTS</span><span class="mode-card-name">Bazooca!</span><span class="mode-card-detail">Só bazuca · explosões</span></button>
+            <button type="button" class="mode-card" data-mode="teams" aria-pressed="false"><span class="mode-card-count">20 × 20</span><span class="mode-card-name">Em equipe!</span><span class="mode-card-detail">Time vermelho contra time azul</span></button>
           </div>
           <p class="mode-description" id="modeDescription">Partida clássica: comece com pistola, encontre armas e enfrente 18 bots.</p>
         </div>
         <div class="hardcore-loadout">
           <label for="hardcoreWeapon">ESCOLHA SUA ARMA INICIAL</label>
           <select id="hardcoreWeapon">
-            <option>PISTOLA</option><option>M4A1</option><option>AK-47</option><option>MP5</option><option>VECTOR</option><option>UMP-45</option><option>ESCOPETA</option><option>M1014</option><option>CALIBRE 12</option><option>DOIS CANOS</option><option>SNIPER</option><option>SCAR-H</option><option>FACA</option>
+            <option>PISTOLA</option><option>M4A1</option><option>AK-47</option><option>MP5</option><option>VECTOR</option><option>UMP-45</option><option>ESCOPETA</option><option>M1014</option><option>CALIBRE 12</option><option>DOIS CANOS</option><option>SNIPER</option><option>SCAR-H</option><option>FACA</option><option>REVOLVER</option><option>PISTOLA 38</option><option>GLOCK</option><option>AWM</option><option>BAZUCA</option>
+          </select>
+        </div>
+        <div class="training-loadout">
+          <label for="trainingOption">ESCOLHA SEU TREINO</label>
+          <select id="trainingOption">
+            <option value="sniping">Snipando</option>
+            <option value="machinegun">Metralhando alvos</option>
+            <option value="normal">Normal</option>
+            <option value="knife">Faca no alvo</option>
+            <option value="pistoleirando">Pistoleirando</option>
+            <option value="peibaaa">PEIBAAA!</option>
+          </select>
+        </div>
+        <div class="team-loadout">
+          <label for="playerTeam">ESCOLHA SEU TIME</label>
+          <select id="playerTeam">
+            <option value="red">Time vermelho</option>
+            <option value="blue">Time azul</option>
+          </select>
+          <label class="team-choice-label" for="teamMatchType">TIPO DE PARTIDA</label>
+          <select id="teamMatchType">
+            <option value="elimination">Eliminação total</option>
+            <option value="timed">5 minutos · respawn ilimitado</option>
           </select>
         </div>
         <button class="primary" id="playBtn">ENTRAR NA PARTIDA <span>↗</span></button>
@@ -223,7 +284,7 @@
       </div>
     </section>
     <section class="modal" id="endModal">
-      <div class="modal-card"><div class="eyebrow" style="justify-content:center">PARTIDA ENCERRADA</div><h2 id="endTitle">FIM DE JOGO</h2><p id="endMessage"></p><button class="primary" id="againBtn" style="margin:auto">JOGAR NOVAMENTE <span>↗</span></button><button class="secondary" id="menuBtn" style="margin:10px auto 0">VOLTAR AO MENU</button></div>
+      <div class="modal-card"><div class="eyebrow" style="justify-content:center">PARTIDA ENCERRADA</div><h2 id="endTitle">FIM DE JOGO</h2><p id="endMessage"></p><div class="player-stats" id="playerStats" hidden aria-label="Estatísticas do jogador"><div class="player-stat"><span class="player-stat-value" id="statsKills">0</span><span class="player-stat-label">ELIMINAÇÕES</span></div><div class="player-stat"><span class="player-stat-value" id="statsDeaths">0</span><span class="player-stat-label">MORTES</span></div><div class="player-stat"><span class="player-stat-value" id="statsAccuracy">0%</span><span class="player-stat-label">PRECISÃO</span></div><div class="player-stat"><span class="player-stat-value" id="statsKdr">0.00</span><span class="player-stat-label">K/D</span></div></div><button class="primary" id="againBtn" style="margin:auto">JOGAR NOVAMENTE <span>↗</span></button><button class="secondary" id="menuBtn" style="margin:10px auto 0">VOLTAR AO MENU</button></div>
     </section>
   </main>
 <script>
@@ -241,14 +302,25 @@
   const $ = id => document.getElementById(id);
   const MAP_SIZE = 48;
   const DEATH_ANIMATION_MS = 1250;
-  const BOT_WEAPON = "M4A1";
   const MODES = {
-    normal:{name:"NORMAL!",botCount:18,startWeapon:"PISTOLA",weapons:["PISTOLA","M4A1","AK-47","MP5","VECTOR","UMP-45","ESCOPETA","M1014","CALIBRE 12","DOIS CANOS","SNIPER","SCAR-H"],locked:false,ammo:12,reserve:48},
+    normal:{name:"NORMAL!",botCount:18,startWeapon:"PISTOLA",weapons:["PISTOLA","M4A1","AK-47","MP5","VECTOR","UMP-45","ESCOPETA","M1014","CALIBRE 12","DOIS CANOS","SNIPER","SCAR-H","REVOLVER","PISTOLA 38","GLOCK","AWM","BAZUCA"],locked:false,ammo:12,reserve:48},
     aim:{name:"NA MIRA!",botCount:25,startWeapon:"SNIPER",weapons:["SNIPER"],locked:true,ammo:5,reserve:100},
     machinegun:{name:"METRALHANDO!",botCount:15,startWeapon:"M4A1",weapons:["M4A1","AK-47","MP5","VECTOR","UMP-45","SCAR-H"],locked:false,ammo:30,reserve:180},
     shotgun:{name:"PEIBA!",botCount:14,startWeapon:"ESCOPETA",weapons:["ESCOPETA","M1014","CALIBRE 12","DOIS CANOS"],locked:false,ammo:6,reserve:48},
     knife:{name:"AFIADO!",botCount:10,startWeapon:"FACA",weapons:["FACA"],locked:true,ammo:Infinity,reserve:Infinity},
-    hardcore:{name:"HARDCORE",botCount:20,startWeapon:"PISTOLA",weapons:["PISTOLA","M4A1","AK-47","MP5","VECTOR","UMP-45","ESCOPETA","M1014","CALIBRE 12","DOIS CANOS","SNIPER","SCAR-H","FACA"],locked:false,hardcore:true}
+    hardcore:{name:"HARDCORE",botCount:20,startWeapon:"PISTOLA",weapons:["PISTOLA","M4A1","AK-47","MP5","VECTOR","UMP-45","ESCOPETA","M1014","CALIBRE 12","DOIS CANOS","SNIPER","SCAR-H","FACA","REVOLVER","PISTOLA 38","GLOCK","AWM","BAZUCA"],locked:false,hardcore:true},
+    pistoleiros:{name:"PISTOLEIROS",botCount:18,startWeapon:"PISTOLA",weapons:["PISTOLA","REVOLVER","GLOCK","PISTOLA 38"],botWeapons:["PISTOLA","REVOLVER","GLOCK","PISTOLA 38"],locked:false},
+    training:{name:"TREINAR É BOM!",botCount:0,startWeapon:"AWM",weapons:[],locked:false,training:true},
+    bazooka:{name:"BAZOOCA!",botCount:15,startWeapon:"BAZUCA",weapons:[],locked:true,ammo:1,reserve:14},
+    teams:{name:"EM EQUIPE!",botCount:40,startWeapon:"M4A1",weapons:["PISTOLA","M4A1","AK-47","MP5","VECTOR","UMP-45","ESCOPETA","M1014","CALIBRE 12","DOIS CANOS","SNIPER","SCAR-H","FACA","REVOLVER","PISTOLA 38","GLOCK","AWM","BAZUCA"],locked:false,teamMode:true,teamSize:20,includeStartWeapon:true}
+  };
+  const TRAINING_MODES={
+    sniping:{name:"SNIPANDO",botCount:0,startWeapon:"AWM",weapons:["AWM"],locked:true,targetCount:8,targetMinDistance:13},
+    machinegun:{name:"METRALHANDO ALVOS",botCount:0,startWeapon:"M4A1",weapons:["M4A1","AK-47","MP5","VECTOR","UMP-45","SCAR-H"],locked:false,movingTargetCount:8},
+    normal:{name:"NORMAL",botCount:5,startWeapon:"PISTOLA",weapons:["PISTOLA","M4A1","AK-47","MP5","VECTOR","UMP-45","ESCOPETA","M1014","CALIBRE 12","DOIS CANOS","SNIPER","SCAR-H","FACA","REVOLVER","PISTOLA 38","GLOCK","AWM","BAZUCA"],botWeapon:"FACA",targetCount:8},
+    knife:{name:"FACA NO ALVO",botCount:10,startWeapon:"FACA",weapons:["FACA"],botWeapon:"FACA",passiveBots:true,targetCount:8,locked:false},
+    pistoleirando:{name:"PISTOLEIRANDO",botCount:10,startWeapon:"PISTOLA",weapons:["PISTOLA"],botWeapon:"FACA",movingTargetCount:8},
+    peibaaa:{name:"PEIBAAA!",botCount:10,startWeapon:"ESCOPETA",weapons:["ESCOPETA","M1014","CALIBRE 12","DOIS CANOS"],botWeapon:"PISTOLA",targetCount:6,movingTargetCount:6}
   };
   const WORLD_THEMES={
     normal:{sky:["#82978c","#b5b39a"],floor:["#59604a","#292e24"],wall:[119,119,101]},
@@ -256,7 +328,11 @@
     machinegun:{sky:["#302117","#a66b3d"],floor:["#624126","#281b13"],wall:[143,91,55]},
     shotgun:{sky:["#38191c","#a95c54"],floor:["#512a26","#241716"],wall:[145,79,75]},
     knife:{sky:["#102b28","#598c7d"],floor:["#244c42","#10251f"],wall:[63,124,107]},
-    hardcore:{sky:["#070d17","#172536"],floor:["#17212b","#080c12"],wall:[68,91,115]}
+    hardcore:{sky:["#070d17","#172536"],floor:["#17212b","#080c12"],wall:[68,91,115]},
+    pistoleiros:{sky:["#291b31","#895a8c"],floor:["#45304c","#201726"],wall:[119,77,132]},
+    training:{sky:["#12343b","#5b9aa0"],floor:["#28535b","#10272c"],wall:[58,121,129]},
+    bazooka:{sky:["#452515","#c37a3f"],floor:["#65402b","#2c1a12"],wall:[147,93,56]},
+    teams:{sky:["#25293b","#806d73"],floor:["#464049","#211e27"],wall:[104,91,105]}
   };
   const MODE_DESCRIPTIONS = {
     normal:"Partida clássica: comece com pistola, encontre armas e enfrente 18 bots.",
@@ -264,7 +340,19 @@
     machinegun:"Use metralhadoras e fuzis automáticos. Colete munição e enfrente 15 bots.",
     shotgun:"Só escopetas: agora alcançam mais longe, com dano que diminui à distância. Elimine 14 bots.",
     knife:"Sem armas de fogo: só a faca contra 10 bots.",
-    hardcore:"20 bots mais fortes, cenário escuro e lanterna. Escolha qualquer arma inicial."
+    hardcore:"20 bots mais fortes, cenário escuro e lanterna. Escolha qualquer arma inicial.",
+    pistoleiros:"Combate com pistola, revólver, Glock e pistola .38.",
+    training:"Escolha um treino de alvos, armas e bots.",
+    bazooka:"Só a bazuca: enfrente 15 bots com foguetes explosivos.",
+    teams:"Escolha o time vermelho ou azul. Cada equipe tem 20 bots e todas as armas ficam espalhadas pelo mapa. Jogue por eliminação ou uma partida de 5 minutos com respawns ilimitados."
+  };
+  const TRAINING_DESCRIPTIONS={
+    sniping:"AWM com mira, alvos a longa distância e nenhum bot.",
+    machinegun:"Metralhadoras contra alvos em movimento, sem bots.",
+    normal:"Alvos, todas as armas e 5 bots armados com faca.",
+    knife:"Alvos e 10 bots com faca que ficam parados e não atacam.",
+    pistoleirando:"Alvos em movimento e 10 bots armados com faca.",
+    peibaaa:"Todas as escopetas contra alvos parados e em movimento, além de 10 bots de pistola."
   };
   const SHOTGUN_WEAPONS = new Set(["ESCOPETA","M1014","CALIBRE 12","DOIS CANOS"]);
   function createMap(){
@@ -292,13 +380,18 @@
     "SNIPER": {mag:5,damage:200,rate:1000,range:48,color:"#83b9fd"},
     "SCAR-H": {mag:20,damage:40,rate:260,range:24,color:"#f078b4"},
     "FACA": {mag:1,damage:65,rate:520,range:2.4,color:"#d9ded6"},
-    "AWM": {mag:5,damage:210,rate:1000,range:50,color:"#f0f0e9"}
+    "REVOLVER": {mag:6,damage:72,rate:520,range:24,color:"#d89c63"},
+    "PISTOLA 38": {mag:8,damage:45,rate:380,range:16,color:"#c4a878"},
+    "GLOCK": {mag:17,damage:27,rate:175,range:18,color:"#91c9b6"},
+    "AWM": {mag:5,damage:200,rate:1000,range:48,color:"#9ec5ff"},
+    "BAZUCA": {mag:1,damage:160,rate:1100,range:40,explosionRadius:3.2,color:"#ff9b52"}
   };
-  let player, bots, pickups, incomingShots = [], inventory = [], activeSlot = 0, currentMode = MODES.normal, weaponLocked = false, knifeSwingUntil = 0, keys = {}, depth = new Float32Array(W), running = false, paused = false;
+  const TEAM_COLORS={red:"#f05b5b",blue:"#5b9eff"};
+  let player, bots, pickups, targets=[], explosions=[], incomingShots = [], inventory = [], activeSlot = 0, currentMode = MODES.normal, weaponLocked = false, playerTeam="red", knifeSwingUntil = 0, keys = {}, depth = new Float32Array(W), running = false, paused = false;
   let lastFrame = 0, lastShot = 0, recoil = 0, hitUntil = 0, zoneTimer = 120, toastTimer = 0;
-  let score = 0, soundOn = true, audio, isAiming = false, gameOver = false, flashlightOn = true;
+  let score = 0, teamScores={red:0,blue:0}, playerStats={kills:0,deaths:0,shots:0,hits:0}, soundOn = true, audio, isAiming = false, gameOver = false, flashlightOn = true;
   const difficulty = {easy:{botDamage:5,botAccuracy:.48,health:120},normal:{botDamage:8,botAccuracy:.65,health:100},hard:{botDamage:12,botAccuracy:.78,health:85}};
-  function currentFov(){return isAiming?(player.weapon==="SNIPER" ? .2 : .48):FOV}
+  function currentFov(){return isAiming?(player.weapon==="SNIPER"||player.weapon==="AWM" ? .2 : .48):FOV}
   function focalLength(){return W/(2*Math.tan(currentFov()/2))}
   const wallAt = (x,y) => {
     const mx = Math.floor(x), my = Math.floor(y);
@@ -347,25 +440,44 @@
     enterFullscreen();
   }
   function startGame(){
-    currentMode=MODES[$("gameMode").value]||MODES.normal;
+    const selectedMode=MODES[$("gameMode").value]||MODES.normal;
+    currentMode=selectedMode.training?{...TRAINING_MODES[$("trainingOption").value],training:true,theme:"training"}:
+      selectedMode.teamMode?{...selectedMode,timed:$("teamMatchType").value==="timed"}:selectedMode;
+    gameRoot.dataset.mode=$("gameMode").value;
+    playerTeam=$("playerTeam").value==="blue"?"blue":"red";
+    gameRoot.dataset.team=playerTeam;
     const cfg=currentMode.hardcore?difficulty.hard:(difficulty[$("difficulty").value]||difficulty.normal);
     weaponLocked=currentMode.locked;
     setAiming(false);
     flashlightOn=true;updateFlashlightStatus();
     const center={x:MAP_SIZE/2,y:MAP_SIZE/2};
     const startWeapon=currentMode.hardcore?$("hardcoreWeapon").value:currentMode.startWeapon;
-    const startAmmo=currentMode.hardcore?(startWeapon==="FACA"?Infinity:weaponSpecs[startWeapon].mag):currentMode.ammo;
-    const startReserve=currentMode.hardcore?(startWeapon==="FACA"?Infinity:weaponSpecs[startWeapon].mag*4):currentMode.reserve;
-    player={...findOpenPoint(center,0,[],4),angle:Math.random()*Math.PI*2,health:cfg.health,maxHealth:cfg.health,armor:100,maxArmor:100,weapon:startWeapon,ammo:startAmmo,reserve:startReserve,mag:weaponSpecs[startWeapon].mag,deadAt:null};
+    const defaultAmmo=startWeapon==="FACA"?Infinity:weaponSpecs[startWeapon].mag;
+    const startAmmo=currentMode.hardcore?defaultAmmo:currentMode.ammo===undefined?defaultAmmo:currentMode.ammo;
+    const defaultReserve=startWeapon==="FACA"?Infinity:weaponSpecs[startWeapon].mag*4;
+    const startReserve=currentMode.hardcore?defaultReserve:currentMode.reserve===undefined?defaultReserve:currentMode.reserve;
+    player={...findOpenPoint(center,0,[],4),angle:Math.random()*Math.PI*2,health:cfg.health,maxHealth:cfg.health,armor:100,maxArmor:100,weapon:startWeapon,ammo:startAmmo,reserve:startReserve,mag:weaponSpecs[startWeapon].mag,deadAt:null,team:currentMode.teamMode?playerTeam:null};
     inventory=[{type:startWeapon,ammo:startAmmo,reserve:startReserve}];activeSlot=0;
     const occupied=[player];
     bots=Array.from({length:currentMode.botCount},(_,i)=>{
       const position=findBotSpawn(occupied,player);
       occupied.push(position);
-      return {...position,angle:Math.random()*Math.PI*2,health:100,alive:true,deathAt:null,deathDirection:Math.random()<.5?-1:1,cooldown:1+Math.random()*2,moveTimer:Math.random(),repathTimer:0,pathTarget:null,lastSeen:null,alertTimer:0,strafe:Math.random()<.5?-1:1,weapon:BOT_WEAPON,id:i};
+      const botWeapons=currentMode.botWeapons;
+      const weapon=currentMode.botWeapon||(botWeapons?botWeapons[Math.floor(Math.random()*botWeapons.length)]:"M4A1");
+      const team=currentMode.teamMode?(i<currentMode.teamSize?"red":"blue"):null;
+      return {...position,angle:Math.random()*Math.PI*2,health:100,alive:true,deathAt:null,deathDirection:Math.random()<.5?-1:1,cooldown:1+Math.random()*2,moveTimer:Math.random(),repathTimer:0,pathTarget:null,lastSeen:null,alertTimer:0,strafe:Math.random()<.5?-1:1,weapon,id:i,team,passive:currentMode.passiveBots||false};
     });
+    targets=[];
+    explosions=[];
+    const targetCount=currentMode.targetCount||0,movingTargetCount=currentMode.movingTargetCount||0;
+    for(let i=0;i<targetCount+movingTargetCount;i++){
+      const moving=i>=targetCount;
+      const position=findOpenPoint(player,moving?5:(currentMode.targetMinDistance||5),occupied);
+      occupied.push(position);
+      targets.push({...position,angle:Math.random()*Math.PI*2,moving,moveTimer:1+Math.random()*2,health:100,alive:true,hitUntil:0,id:i});
+    }
     incomingShots=[];
-    const weaponTypes=currentMode.locked?[]:currentMode.weapons.filter(name=>name!==startWeapon);
+    const weaponTypes=currentMode.locked?[]:currentMode.weapons.filter(name=>name!==startWeapon||currentMode.includeStartWeapon);
     for(let i=weaponTypes.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[weaponTypes[i],weaponTypes[j]]=[weaponTypes[j],weaponTypes[i]]}
     const placedWeapons=[];
     pickups=weaponTypes.map((type,i)=>{
@@ -384,10 +496,10 @@
       pickups.push({...position,type:"COLETE",color:"#70d2ef",amount:100});
       lootOccupied.push(position);
     }
-    score=0;zoneTimer=120;lastShot=0;gameOver=false;paused=false;running=true;
+    score=0;teamScores={red:0,blue:0};playerStats={kills:0,deaths:0,shots:0,hits:0};zoneTimer=currentMode.timed?300:currentMode.training?Infinity:120;lastShot=0;gameOver=false;paused=false;running=true;
     $("menu").style.display="none";$("endModal").classList.remove("open");$("hud").hidden=false;
-    $("activeModeName").textContent=currentMode.name;
-    updateHud();showToast(`${currentMode.name} — ${currentMode.botCount} BOTS`);playTone(240,.16,"triangle",.06);enterFullscreen();lockPointer();requestAnimationFrame(frame);
+    $("activeModeName").textContent=currentMode.teamMode?`${currentMode.name} · ${playerTeam==="red"?"VERMELHO":"AZUL"}`:currentMode.name;
+    updateHud();showToast(currentMode.timed?"PARTIDA DE 5 MINUTOS — RESPAWN ILIMITADO":`${currentMode.name} — ${currentMode.teamMode?currentMode.teamSize*2:currentMode.botCount} BOTS`);playTone(240,.16,"triangle",.06);enterFullscreen();lockPointer();requestAnimationFrame(frame);
   }
   function updateFlashlightStatus(){
     const status=$("flashlightStatus");
@@ -403,18 +515,18 @@
     try{
       audio=audio||new (window.AudioContext||window.webkitAudioContext)();
       if(audio.state==="suspended")audio.resume().catch(error=>console.warn("Não foi possível iniciar o áudio:",error));
-      const now=audio.currentTime,shotgun=SHOTGUN_WEAPONS.has(weapon),sniper=weapon==="SNIPER";
-      const frequency=sniper?72:shotgun?88:weapon==="FACA"?190:118;
-      const volume=isBot?.045:.11,duration=sniper?.22:shotgun?.17:.105;
+      const now=audio.currentTime,shotgun=SHOTGUN_WEAPONS.has(weapon),sniper=weapon==="SNIPER"||weapon==="AWM",bazooka=weapon==="BAZUCA";
+      const frequency=bazooka?48:sniper?72:shotgun?88:weapon==="FACA"?190:118;
+      const volume=isBot?.045:.11,duration=bazooka?.32:sniper?.22:shotgun?.17:.105;
       const oscillator=audio.createOscillator(),toneGain=audio.createGain();
       oscillator.type="sawtooth";oscillator.frequency.setValueAtTime(frequency*2.2,now);oscillator.frequency.exponentialRampToValueAtTime(frequency,now+duration);
       toneGain.gain.setValueAtTime(volume,now);toneGain.gain.exponentialRampToValueAtTime(.001,now+duration);
       oscillator.connect(toneGain);toneGain.connect(audio.destination);oscillator.start(now);oscillator.stop(now+duration);
       if(weapon!=="FACA"){
-        const length=Math.floor(audio.sampleRate*.075),buffer=audio.createBuffer(1,length,audio.sampleRate),samples=buffer.getChannelData(0);
+        const length=Math.floor(audio.sampleRate*(bazooka?.2:.075)),buffer=audio.createBuffer(1,length,audio.sampleRate),samples=buffer.getChannelData(0);
         for(let i=0;i<length;i++)samples[i]=(Math.random()*2-1)*(1-i/length);
         const noise=audio.createBufferSource(),noiseGain=audio.createGain(),filter=audio.createBiquadFilter();
-        noise.buffer=buffer;filter.type="lowpass";filter.frequency.value=sniper?1200:2200;
+        noise.buffer=buffer;filter.type="lowpass";filter.frequency.value=bazooka?650:sniper?1200:2200;
         noiseGain.gain.setValueAtTime(volume*(isBot?.55:.9),now);noiseGain.gain.exponentialRampToValueAtTime(.001,now+.075);
         noise.connect(filter);filter.connect(noiseGain);noiseGain.connect(audio.destination);noise.start(now);noise.stop(now+.075);
       }
@@ -437,7 +549,7 @@
     }return {distance:20,side:0,wallX:0};
   }
   function renderWorld(now){
-    const theme=WORLD_THEMES[currentMode.hardcore?"hardcore":Object.keys(MODES).find(key=>MODES[key]===currentMode)||"normal"]||WORLD_THEMES.normal;
+    const theme=WORLD_THEMES[currentMode.theme||(currentMode.hardcore?"hardcore":gameRoot.dataset.mode)]||WORLD_THEMES.normal;
     const sky=ctx.createLinearGradient(0,0,0,H*.5);sky.addColorStop(0,theme.sky[0]);sky.addColorStop(1,theme.sky[1]);
     ctx.fillStyle=sky;ctx.fillRect(0,0,W,H/2);
     const floor=ctx.createLinearGradient(0,H/2,0,H);floor.addColorStop(0,theme.floor[0]);floor.addColorStop(1,theme.floor[1]);ctx.fillStyle=floor;ctx.fillRect(0,H/2,W,H/2);
@@ -458,7 +570,7 @@
     // horizon detail
     ctx.fillStyle="rgba(226,219,179,.32)";
     for(let i=0;i<7;i++){const x=((i*113+40)%W),y=H*.25+(i%3)*7;ctx.fillRect(x,y,28+(i%4)*9,1)}
-    renderObjects(now);renderIncomingShots(now);renderWeapon(now);renderAimReticle();renderMinimap();renderPlayerDeath(now);renderFlashlight();
+    renderObjects(now);renderExplosions(now);renderIncomingShots(now);renderWeapon(now);renderAimReticle();renderMinimap();renderPlayerDeath(now);renderFlashlight();
   }
   function renderFlashlight(){
     if(!currentMode.hardcore)return;
@@ -497,14 +609,18 @@
   function renderObjects(now){
     const things=[];
     for(const bot of bots)if(bot.alive||(bot.deathAt!==null&&now-bot.deathAt<DEATH_ANIMATION_MS)){const p=project(bot);if(p)things.push({type:"bot",obj:bot,p})}
+    for(const target of targets)if(target.alive){const p=project(target);if(p)things.push({type:"target",obj:target,p})}
     for(const item of pickups){const p=project(item);if(p)things.push({type:"item",obj:item,p})}
     things.sort((a,b)=>b.p.d-a.p.d);
     for(const item of things){
-      const {x,d,z,scale}=item.p;if(z<d-.25)continue;
+      const {x,d,z,scale}=item.p;
+      const xray=item.type==="bot"&&isAiming&&player.weapon==="AWM";
+      if(z<d-.25&&!xray)continue;
       if(item.type==="bot"){
+        ctx.save();if(xray)ctx.globalAlpha=.48;
         const b=item.obj,h=Math.min(H*.92,scale*.83),w=h*.42,base=H/2+h*.5,blink=now<b.hitUntil;
         const deathProgress=b.deathAt===null?0:Math.min(1,(now-b.deathAt)/DEATH_ANIMATION_MS);
-        const y0=base-h,armor=blink?"#fff":(b.id%3===0?"#879a54":b.id%3===1?"#877360":"#687f78");
+        const y0=base-h,armor=blink?"#fff":b.team?TEAM_COLORS[b.team]:(b.id%3===0?"#879a54":b.id%3===1?"#877360":"#687f78");
         ctx.fillStyle=`rgba(0,0,0,${.2+deathProgress*.22})`;ctx.beginPath();ctx.ellipse(x,base,w*(.55+deathProgress*.35),h*.09,0,0,Math.PI*2);ctx.fill();
         ctx.save();
         if(deathProgress){ctx.globalAlpha=1-deathProgress*.55;ctx.translate(x,base-h*.42);ctx.rotate(b.deathDirection*deathProgress*1.35);ctx.translate(-x,-(base-h*.42))}
@@ -517,6 +633,16 @@
         ctx.restore();
         if(b.deathAt!==null)renderBotBlood(x,base-h*.55,h,now-b.deathAt,b.id);
         if(b.alive){const hpw=w*.72;ctx.fillStyle="rgba(0,0,0,.7)";ctx.fillRect(x-hpw/2,y0-7,hpw,3);ctx.fillStyle="#d5fa56";ctx.fillRect(x-hpw/2,y0-7,hpw*(b.health/100),3)}
+        ctx.restore();
+      }else if(item.type==="target"){
+        const size=Math.max(9,Math.min(38,scale*.34));
+        ctx.save();ctx.translate(x,H/2+scale*.43);
+        ctx.fillStyle="rgba(0,0,0,.3)";ctx.beginPath();ctx.ellipse(0,0,size*.8,size*.25,0,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle=now<item.obj.hitUntil?"#d5fa56":"#e7e9df";ctx.beginPath();ctx.arc(0,-size*.5,size*.48,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle="#c63f3f";ctx.beginPath();ctx.arc(0,-size*.5,size*.34,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle="#f1eee1";ctx.beginPath();ctx.arc(0,-size*.5,size*.2,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle="#c63f3f";ctx.beginPath();ctx.arc(0,-size*.5,size*.09,0,Math.PI*2);ctx.fill();
+        ctx.restore();
       }else{
         const size=Math.max(7,Math.min(30,scale*.27));
         ctx.save();ctx.translate(x,H/2+scale*.43);ctx.fillStyle="rgba(0,0,0,.26)";ctx.beginPath();ctx.ellipse(0,0,size*.9,size*.35,0,0,7);ctx.fill();
@@ -543,6 +669,18 @@
     }
     ctx.restore();
   }
+  }
+  function renderExplosions(now){
+    explosions=explosions.filter(explosion=>explosion.expires>now);
+    for(const explosion of explosions){
+      const progress=1-(explosion.expires-now)/420,projected=project(explosion);
+      if(!projected||projected.z<projected.d-.25)continue;
+      const radius=Math.max(5,Math.min(90,projected.scale*(.45+progress*explosion.radius)));
+      ctx.save();ctx.globalAlpha=1-progress;
+      const glow=ctx.createRadialGradient(projected.x,H/2+projected.scale*.43,1,projected.x,H/2+projected.scale*.43,radius);
+      glow.addColorStop(0,"rgba(255,244,179,.95)");glow.addColorStop(.28,"rgba(255,158,63,.86)");glow.addColorStop(1,"rgba(205,55,26,0)");
+      ctx.fillStyle=glow;ctx.beginPath();ctx.arc(projected.x,H/2+projected.scale*.43,radius,0,Math.PI*2);ctx.fill();ctx.restore();
+    }
   }
   function drawBotWeapon(x,y,w,h,bot,viewAngle){
     const yaw=angleDiff(bot.angle,player.angle+viewAngle+Math.PI);
@@ -583,7 +721,7 @@
     }
   }
   function renderWeapon(now){
-    if(isAiming&&player.weapon==="SNIPER")return;
+    if(isAiming&&(player.weapon==="SNIPER"||player.weapon==="AWM"))return;
     const bob=(Math.sin(now*.006*(keys.w||keys.s?1.8:.7))*(keys.w||keys.s?5:2));
     const deathProgress=player.deadAt===null?0:Math.min(1,(now-player.deadAt)/DEATH_ANIMATION_MS);
     const kick=recoil*9,center=W*.5+(isAiming?0:38),base=H+30+bob+kick+deathProgress*H*.62;
@@ -597,7 +735,15 @@
       ctx.fillStyle="#c6d0cc";ctx.beginPath();ctx.moveTo(-3,-2);ctx.lineTo(3,-48);ctx.lineTo(10,-61);ctx.lineTo(9,-4);ctx.closePath();ctx.fill();
       ctx.fillStyle="#eef7e8";ctx.fillRect(6,-45,2,31);ctx.restore();ctx.restore();recoil=Math.max(0,recoil-.05);return;
     }
-    const sniper=player.weapon==="SNIPER",shotgun=SHOTGUN_WEAPONS.has(player.weapon);
+    if(player.weapon==="BAZUCA"){
+      ctx.fillStyle="#566148";ctx.fillRect(-34,-203,58,77);
+      ctx.fillStyle="#252a21";ctx.fillRect(-39,-209,9,89);ctx.fillRect(17,-209,10,89);
+      ctx.fillStyle="#84906a";ctx.fillRect(-29,-198,47,10);ctx.fillRect(-28,-139,46,8);
+      ctx.fillStyle="#c3aa73";ctx.fillRect(-12,-187,20,6);
+      if(now<lastShot+170){ctx.fillStyle="rgba(255,174,76,.9)";ctx.beginPath();ctx.moveTo(-12,-209);ctx.lineTo(-2,-239-Math.random()*12);ctx.lineTo(10,-207);ctx.fill()}
+      ctx.restore();recoil=Math.max(0,recoil-.05);return;
+    }
+    const sniper=player.weapon==="SNIPER"||player.weapon==="AWM",shotgun=SHOTGUN_WEAPONS.has(player.weapon);
     ctx.fillStyle="#181b17";
     ctx.fillRect(sniper?-24:-12,sniper?-187:-173,sniper?45:shotgun?30:19,sniper?62:shotgun?40:49);
     ctx.fillRect(-18,-141,32,28);
@@ -633,7 +779,7 @@
   }
   function renderAimReticle(){
     if(!isAiming){return}
-    if(player.weapon==="SNIPER"){
+    if(player.weapon==="SNIPER"||player.weapon==="AWM"){
       const radius=Math.min(W,H)*.39;
       ctx.save();ctx.fillStyle="rgba(0,0,0,.96)";ctx.beginPath();ctx.rect(0,0,W,H);ctx.arc(W/2,H/2,radius,0,Math.PI*2);ctx.fill("evenodd");
       ctx.strokeStyle="#c7d0bb";ctx.lineWidth=2;ctx.beginPath();ctx.arc(W/2,H/2,radius,0,Math.PI*2);ctx.stroke();
@@ -654,8 +800,9 @@
     const radius=Math.max(5,MAP_SIZE*.76+Math.min(0,zoneTimer)*.2);
     mctx.strokeStyle="rgba(213,250,86,.65)";mctx.lineWidth=1.5;mctx.beginPath();mctx.arc(MAP_SIZE/2*s,MAP_SIZE/2*s,radius*s,0,Math.PI*2);mctx.stroke();
     for(const it of pickups){mctx.fillStyle=it.color||weaponSpecs[it.type].color;mctx.fillRect(it.x*s-1.5,it.y*s-1.5,3,3)}
-    for(const b of bots)if(b.alive){mctx.fillStyle="#e88764";mctx.beginPath();mctx.arc(b.x*s,b.y*s,2.4,0,7);mctx.fill()}
-    mctx.save();mctx.translate(player.x*s,player.y*s);mctx.rotate(player.angle);mctx.fillStyle="#d5fa56";mctx.beginPath();mctx.moveTo(6,0);mctx.lineTo(-4,-3);mctx.lineTo(-4,3);mctx.fill();mctx.restore();
+    for(const target of targets)if(target.alive){mctx.fillStyle="#e7e9df";mctx.fillRect(target.x*s-1.5,target.y*s-1.5,3,3)}
+    for(const b of bots)if(b.alive){mctx.fillStyle=b.team?TEAM_COLORS[b.team]:"#e88764";mctx.beginPath();mctx.arc(b.x*s,b.y*s,2.4,0,7);mctx.fill()}
+    mctx.save();mctx.translate(player.x*s,player.y*s);mctx.rotate(player.angle);mctx.fillStyle=currentMode.teamMode?TEAM_COLORS[playerTeam]:"#d5fa56";mctx.beginPath();mctx.moveTo(6,0);mctx.lineTo(-4,-3);mctx.lineTo(-4,3);mctx.fill();mctx.restore();
   }
   function moveEntity(entity,dx,dy,r=.18){
     if(!wallAt(entity.x+dx+r*Math.sign(dx),entity.y))entity.x+=dx;
@@ -674,16 +821,113 @@
     if(magnitude>maxStep){dx=dx/magnitude*maxStep;dy=dy/magnitude*maxStep}
     moveEntity(bot,dx,dy,.2);
   }
+  function damageBot(bot,amount,now,byPlayer=false,killerTeam=null){
+    if(!bot.alive)return false;
+    bot.health-=amount;bot.hitUntil=now+140;
+    if(bot.health>0)return false;
+    bot.health=0;bot.alive=false;bot.deathAt=now;
+    if(byPlayer){
+      score++;player.reserve+=Math.ceil(Math.random()*9+5);player.health=Math.min(player.maxHealth,player.health+7);
+      if(currentMode.teamMode){teamScores[playerTeam]++;playerStats.kills++}
+    }else if(currentMode.timed&&killerTeam){
+      teamScores[killerTeam]++;
+    }
+    return true;
+  }
+  function respawnPlayer(){
+    const position=findOpenPoint({x:MAP_SIZE/2,y:MAP_SIZE/2},0,bots.filter(bot=>bot.alive));
+    const startWeapon=currentMode.startWeapon,spec=weaponSpecs[startWeapon];
+    Object.assign(player,position,{angle:Math.random()*Math.PI*2,health:player.maxHealth,armor:player.maxArmor,weapon:startWeapon,ammo:spec.mag,reserve:spec.mag*4,mag:spec.mag,deadAt:null});
+    inventory=[{type:startWeapon,ammo:player.ammo,reserve:player.reserve}];activeSlot=0;setAiming(false);
+    showToast("VOCÊ VOLTOU À PARTIDA");
+  }
+  function updateTeamBots(dt,now,cfg){
+    for(const bot of bots){
+      if(!bot.alive){
+        if(currentMode.timed&&bot.deathAt!==null&&now-bot.deathAt>=DEATH_ANIMATION_MS){
+          const occupied=[...bots.filter(other=>other!==bot&&other.alive)];
+          if(player.deadAt===null)occupied.push(player);
+          Object.assign(bot,findBotSpawn(occupied,player),{
+            health:100,alive:true,deathAt:null,angle:Math.random()*Math.PI*2,
+            cooldown:1+Math.random()*2,moveTimer:Math.random(),repathTimer:0,pathTarget:null,lastSeen:null,alertTimer:0
+          });
+        }
+        continue;
+      }
+      bot.cooldown-=dt;bot.repathTimer-=dt;bot.moveTimer-=dt;
+      const opponents=bots.filter(other=>other.alive&&other.team!==bot.team)
+        .map(other=>({entity:other,isPlayer:false,distance:dist(bot,other)}));
+      if(player.deadAt===null&&player.team!==bot.team)opponents.push({entity:player,isPlayer:true,distance:dist(bot,player)});
+      opponents.sort((a,b)=>a.distance-b.distance);
+      const target=opponents.find(opponent=>opponent.distance<=26&&!lineBlocked(bot,opponent.entity));
+      if(!target){
+        if(bot.moveTimer<=0){bot.angle+=Math.random()*2-1;bot.moveTimer=.8+Math.random()*1.6}
+        moveBot(bot,Math.cos(bot.angle)*dt*.55,Math.sin(bot.angle)*dt*.55);
+        continue;
+      }
+      const enemy=target.entity,d=target.distance;
+      bot.alertTimer=4;
+      const targetAngle=Math.atan2(enemy.y-bot.y,enemy.x-bot.x);
+      const turn=angleDiff(targetAngle,bot.angle),maxTurn=dt*2.8;
+      bot.angle+=Math.sign(turn)*Math.min(Math.abs(turn),maxTurn);
+      const desiredRange=bot.weapon==="FACA"?1.25:Math.max(4,Math.min(14,weaponSpecs[bot.weapon].range*.58));
+      if(d>desiredRange+1.5){
+        let destination=enemy;
+        if(lineBlocked(bot,enemy)){
+          if(bot.repathTimer<=0||!bot.pathTarget||dist(bot,bot.pathTarget)<.3){
+            bot.pathTarget=findNextStep(bot,enemy);bot.repathTimer=.7+Math.random()*.3;
+          }
+          if(bot.pathTarget)destination=bot.pathTarget;
+        }
+        const angle=Math.atan2(destination.y-bot.y,destination.x-bot.x);
+        moveBot(bot,Math.cos(angle)*dt*1.35,Math.sin(angle)*dt*1.35);
+      }else if(d<desiredRange-2){
+        moveBot(bot,-Math.cos(targetAngle)*dt*.8,-Math.sin(targetAngle)*dt*.8);
+      }else{
+        if(bot.moveTimer<=0){bot.strafe=Math.random()<.35?-bot.strafe:bot.strafe;bot.moveTimer=.7+Math.random()*.8}
+        moveBot(bot,-Math.sin(targetAngle)*bot.strafe*dt*.9,Math.cos(targetAngle)*bot.strafe*dt*.9);
+      }
+      if(d>weaponSpecs[bot.weapon].range||lineBlocked(bot,enemy)||bot.cooldown>0||Math.abs(angleDiff(targetAngle,bot.angle))>=.2)continue;
+      bot.cooldown=Math.max(.65,weaponSpecs[bot.weapon].rate/1000)*(1.3+Math.random()*.45);
+      const hit=Math.random()<cfg.botAccuracy;
+      if(bot.weapon==="FACA")bot.swingUntil=now+220;
+      else{
+        bot.muzzleUntil=now+125;playGunshot(bot.weapon,true);
+        if(target.isPlayer)incomingShots.push({source:{x:bot.x,y:bot.y},expires:now+150,hit,offset:hit?0:(Math.random()-.5)*W*.12});
+      }
+      if(!hit)continue;
+      const weaponFactor=bot.weapon==="SNIPER"||bot.weapon==="AWM"?1.5:SHOTGUN_WEAPONS.has(bot.weapon)?1.2:bot.weapon==="FACA"?1.4:1;
+      if(target.isPlayer)damagePlayer(cfg.botDamage*weaponFactor,bot,now);
+      else damageBot(enemy,cfg.botDamage*weaponFactor,now,false,bot.team);
+    }
+  }
   function update(dt,now){
     if(paused||gameOver)return;
-    if(player.deadAt!==null){if(now-player.deadAt>=DEATH_ANIMATION_MS)endGame(false);return}
+    if(currentMode.timed){
+      zoneTimer=Math.max(0,zoneTimer-dt);
+      const minutes=Math.floor(zoneTimer/60),seconds=Math.floor(zoneTimer%60);
+      $("zoneText").textContent=`TEMPO ${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+      if(zoneTimer<=0){endGame(true);return}
+      if(player.deadAt!==null&&now-player.deadAt>=DEATH_ANIMATION_MS)respawnPlayer();
+    }else if(player.deadAt!==null){if(now-player.deadAt>=DEATH_ANIMATION_MS)endGame(false);return}
     let forward=(keys.w?1:0)-(keys.s?1:0),strafe=(keys.d?1:0)-(keys.a?1:0);
     if(forward||strafe){const len=Math.hypot(forward,strafe),speed=(keys.shift?3.7:2.55)*dt;forward/=len;strafe/=len;moveEntity(player,(Math.cos(player.angle)*forward-Math.sin(player.angle)*strafe)*speed,(Math.sin(player.angle)*forward+Math.cos(player.angle)*strafe)*speed)}
+    for(const target of targets){
+      if(!target.alive){if(now-target.deathAt>=900){target.alive=true;target.health=100;target.deathAt=null}continue}
+      if(!target.moving)continue;
+      target.moveTimer-=dt;
+      if(target.moveTimer<=0){target.angle+=(Math.random()-.5)*1.5;target.moveTimer=1+Math.random()*2}
+      const beforeX=target.x,beforeY=target.y;
+      moveEntity(target,Math.cos(target.angle)*dt*.8,Math.sin(target.angle)*dt*.8,.3);
+      if(target.x===beforeX&&target.y===beforeY){target.angle+=Math.PI*(.7+Math.random()*.6);target.moveTimer=.4}
+    }
     const cfg=difficulty[$("difficulty").value]||difficulty.normal;
-    const visibleBots=bots.filter(b=>b.alive&&dist(b,player)<(b.weapon==="SNIPER"?weaponSpecs.SNIPER.range:26)&&!lineBlocked(b,player));
+    if(currentMode.teamMode)updateTeamBots(dt,now,cfg);
+    const visibleBots=currentMode.teamMode?[]:bots.filter(b=>b.alive&&dist(b,player)<(b.weapon==="SNIPER"?weaponSpecs.SNIPER.range:26)&&!lineBlocked(b,player));
     const attackers=new Set(visibleBots.sort((a,b)=>dist(a,player)-dist(b,player)).slice(0,3));
-    for(const b of bots){
+    if(!currentMode.teamMode)for(const b of bots){
       if(!b.alive)continue;
+      if(b.passive)continue;
       b.cooldown-=dt;b.repathTimer-=dt;b.alertTimer=Math.max(0,b.alertTimer-dt);b.moveTimer-=dt;
       const d=dist(player,b),targetAngle=Math.atan2(player.y-b.y,player.x-b.x);
       const visible=attackers.has(b);
@@ -730,12 +974,13 @@
         }
       }
     }
-    if(zoneTimer>0){zoneTimer-=dt;if(zoneTimer<=0){showToast("ZONA FECHANDO — FIQUE EM MOVIMENTO");$("zoneText").textContent="ZONA FECHANDO"}}
-    if(zoneTimer<0){const radius=Math.max(5,MAP_SIZE*.76+zoneTimer*.2),outside=Math.hypot(player.x-MAP_SIZE/2,player.y-MAP_SIZE/2)>radius;if(outside&&Math.random()<dt*.55)damagePlayer(4)}
+    if(!currentMode.timed&&zoneTimer>0){zoneTimer-=dt;if(zoneTimer<=0){showToast("ZONA FECHANDO — FIQUE EM MOVIMENTO");$("zoneText").textContent="ZONA FECHANDO"}}
+    if(!currentMode.timed&&zoneTimer<0){const radius=Math.max(5,MAP_SIZE*.76+zoneTimer*.2),outside=Math.hypot(player.x-MAP_SIZE/2,player.y-MAP_SIZE/2)>radius;if(outside&&Math.random()<dt*.55)damagePlayer(4)}
     if(toastTimer>0){toastTimer-=dt;if(toastTimer<=0)$("toast").classList.remove("show")}
-    if(player.deadAt!==null)return;
-    if(bots.every(b=>!b.alive)){
-      const lastDeath=Math.max(...bots.map(b=>b.deathAt??now));
+    if(player.deadAt!==null){updateHud();return}
+    const remainingBots=currentMode.teamMode?bots.filter(bot=>bot.team!==playerTeam):bots;
+    if(!currentMode.timed&&remainingBots.length&&remainingBots.every(b=>!b.alive)){
+      const lastDeath=Math.max(...remainingBots.map(b=>b.deathAt??now));
       if(now-lastDeath>=DEATH_ANIMATION_MS)endGame(true);
       return;
     }
@@ -782,7 +1027,11 @@
   function damagePlayer(amount,source=null,now=performance.now()){
     if(player.deadAt!==null)return;
     const absorbed=Math.min(player.armor,amount*.65);player.armor-=absorbed;player.health-=amount-absorbed;
-    if(player.health<=0){player.health=0;player.deadAt=now;setAiming(false)}
+    if(player.health<=0){
+      player.health=0;player.deadAt=now;setAiming(false);
+      if(currentMode.teamMode)playerStats.deaths++;
+      if(currentMode.timed&&source?.team)teamScores[source.team]++;
+    }
     const indicator=$("damageDirection"),flash=$("damageFlash");
     flash.classList.remove("show");requestAnimationFrame(()=>flash.classList.add("show"));
     if(source){
@@ -822,18 +1071,50 @@
     if(!isKnife&&player.ammo<=0){showToast("SEM MUNIÇÃO — PRESSIONE R");playTone(110,.08);return}
     const isShotgun=SHOTGUN_WEAPONS.has(player.weapon);
     lastShot=now;if(!isKnife)player.ammo--;else knifeSwingUntil=now+260;recoil=1;if(isKnife)playTone(260,.12,"triangle",.07);else playGunshot(player.weapon);
+    if(currentMode.teamMode)playerStats.shots++;
+    if(player.weapon==="BAZUCA"){
+      const wallDistance=castRay(player.angle).distance;
+      const impactDistance=Math.min(spec.range,wallDistance);
+      let impact={x:player.x+Math.cos(player.angle)*impactDistance,y:player.y+Math.sin(player.angle)*impactDistance};
+      const directHit=bots.filter(bot=>bot.alive)
+        .map(bot=>({bot,distance:dist(player,bot),along:(bot.x-player.x)*Math.cos(player.angle)+(bot.y-player.y)*Math.sin(player.angle),across:Math.abs(-(bot.x-player.x)*Math.sin(player.angle)+(bot.y-player.y)*Math.cos(player.angle))}))
+        .filter(candidate=>candidate.distance<=impactDistance&&candidate.along>0&&candidate.across<=.65&&!lineBlocked(player,candidate.bot))
+        .sort((a,b)=>a.distance-b.distance)[0];
+      if(directHit)impact={x:directHit.bot.x,y:directHit.bot.y};
+      explosions.push({...impact,radius:spec.explosionRadius,expires:now+420});
+      let hits=0,teamHit=false;
+      for(const bot of bots){
+        const distance=dist(impact,bot);
+        if(currentMode.teamMode&&bot.team===playerTeam)continue;
+        if(!bot.alive||distance>spec.explosionRadius||lineBlocked(impact,bot))continue;
+        const damage=distance<=.65?spec.damage:spec.damage*Math.max(.25,1-distance/spec.explosionRadius);
+        if(damageBot(bot,damage,now,true))hits++;
+        if(currentMode.teamMode)teamHit=true;
+      }
+      if(teamHit)playerStats.hits++;
+      showToast(hits?`EXPLOSÃO — ${hits} ${hits===1?"BOT ATINGIDO":"BOTS ATINGIDOS"}`:"FOGUETE DETONADO");
+      updateHud();return;
+    }
     let target=null,best=Infinity;
-    for(const b of bots){
-      if(!b.alive)continue;
-      const dx=b.x-player.x,dy=b.y-player.y,d=Math.hypot(dx,dy);
+    const canPenetrate=player.weapon==="AWM";
+    for(const candidate of [...bots.filter(bot=>bot.alive).map(obj=>({obj,type:"bot"})),...targets.filter(item=>item.alive).map(obj=>({obj,type:"target"}))]){
+      const b=candidate.obj,dx=b.x-player.x,dy=b.y-player.y,d=Math.hypot(dx,dy);
+      if(currentMode.teamMode&&candidate.type==="bot"&&b.team===playerTeam)continue;
       const along=dx*Math.cos(player.angle)+dy*Math.sin(player.angle);
       const across=Math.abs(-dx*Math.sin(player.angle)+dy*Math.cos(player.angle));
-      const halfWidth=isKnife ? .72 : player.weapon==="SNIPER" ? .18 : isShotgun ? .3+d*.14 : .34+d*.025;
-      if(d>spec.range||along<=0||across>halfWidth||lineBlocked(player,b))continue;
-      if(d<best){best=d;target=b}
+      const halfWidth=isKnife ? .72 : player.weapon==="SNIPER"||player.weapon==="AWM" ? .18 : candidate.type==="target" ? .48+d*.02 : isShotgun ? .3+d*.14 : .34+d*.025;
+      if(d>spec.range||along<=0||across>halfWidth||(!canPenetrate&&lineBlocked(player,b)))continue;
+      if(d<best){best=d;target=candidate}
     }
-    if(target){const falloff=isShotgun?Math.max(.28,1-Math.max(0,best-4)/(spec.range-4)*.72):1;target.health-=spec.damage*(isShotgun?spec.pellets:1)*falloff;target.hitUntil=now+140;hitUntil=now+170;$("crosshair").classList.add("hit");setTimeout(()=>$("crosshair").classList.remove("hit"),180);playTone(470,.06,"triangle",.04);
-      if(target.health<=0){target.health=0;target.alive=false;target.deathAt=now;score++;player.reserve+=Math.ceil(Math.random()*9+5);player.health=Math.min(player.maxHealth,player.health+7);showToast("BOT ELIMINADO  +7 VIDA");}
+    if(target){const falloff=isShotgun?Math.max(.28,1-Math.max(0,best-4)/(spec.range-4)*.72):1;const hitTarget=target.obj;hitTarget.health-=spec.damage*(isShotgun?spec.pellets:1)*falloff;hitTarget.hitUntil=now+140;hitUntil=now+170;
+      if(currentMode.teamMode&&target.type==="bot")playerStats.hits++;
+      $("crosshair").classList.add("hit");setTimeout(()=>$("crosshair").classList.remove("hit"),180);playTone(470,.06,"triangle",.04);
+      if(hitTarget.health<=0){
+        if(target.type==="bot"){
+          damageBot(hitTarget,0,now,true);
+          showToast("BOT ELIMINADO  +7 VIDA");
+        }else{hitTarget.health=0;hitTarget.alive=false;hitTarget.deathAt=now;showToast("ALVO ATINGIDO")}
+      }
     }
     updateHud();
   }
@@ -878,7 +1159,15 @@
     $("healthText").textContent=Math.max(0,Math.ceil(player.health));$("healthBar").style.width=`${Math.max(0,player.health/player.maxHealth*100)}%`;
     $("armorText").textContent=Math.ceil(player.armor);$("armorBar").style.width=`${Math.max(0,player.armor/player.maxArmor*100)}%`;
     $("ammoText").textContent=player.ammo;$("reserveText").textContent=player.reserve;$("weaponName").textContent=player.weapon;
-    $("killsText").textContent=`${score} ELIMINAÇÕES`;$("aliveCount").textContent=bots.filter(b=>b.alive).length+1;
+    if(currentMode.teamMode){
+      if(currentMode.timed)$("killsText").textContent=`VERMELHO ${teamScores.red} · AZUL ${teamScores.blue} ELIMS`;
+      else{
+        const redAlive=bots.filter(bot=>bot.alive&&bot.team==="red").length+(playerTeam==="red"&&player.deadAt===null?1:0);
+        const blueAlive=bots.filter(bot=>bot.alive&&bot.team==="blue").length+(playerTeam==="blue"&&player.deadAt===null?1:0);
+        $("killsText").textContent=`${score} ELIMS · VERMELHO ${redAlive} / AZUL ${blueAlive}`;
+      }
+    }else $("killsText").textContent=`${score} ELIMINAÇÕES`;
+    $("aliveCount").textContent=bots.filter(b=>b.alive).length+(player.deadAt===null?1:0);
     for(let i=0;i<4;i++){
       const slot=inventory[i],button=$(`weaponSlot${i}`);
       button.disabled=!slot;button.classList.toggle("active",i===activeSlot);
@@ -891,9 +1180,29 @@
     $("reserveText").textContent=player.weapon==="FACA"?"CORPO A CORPO":player.reserve;
   }
   function endGame(won){
-    gameOver=true;running=false;paused=false;document.exitPointerLock?.();$("menu").style.display="none";$("hud").hidden=true;$("endTitle").textContent=won?"VOCÊ SOBREVIVEU":"ELIMINADO";$("endTitle").style.color=won?"var(--acid)":"#ee8777";
-    $("endMessage").textContent=won?`Todos os bots foram eliminados. Você fez ${score} eliminações. Bom trabalho, operador.`:`Você fez ${score} ${score===1?"eliminação":"eliminações"}. Reúna equipamento e tente novamente.`;$("endModal").classList.add("open");
-    if(won){playTone(523,.18,"triangle",.08);setTimeout(()=>playTone(659,.22,"triangle",.08),150);setTimeout(()=>playTone(784,.3,"triangle",.08),340)}else playTone(72,.42,"sawtooth",.08);
+    gameOver=true;running=false;paused=false;document.exitPointerLock?.();$("menu").style.display="none";$("hud").hidden=true;
+    $("playerStats").hidden=!currentMode.teamMode;
+    if(currentMode.teamMode){
+      $("statsKills").textContent=playerStats.kills;
+      $("statsDeaths").textContent=playerStats.deaths;
+      $("statsAccuracy").textContent=`${playerStats.shots?Math.round(playerStats.hits/playerStats.shots*100):0}%`;
+      $("statsKdr").textContent=(playerStats.kills/Math.max(1,playerStats.deaths)).toFixed(2);
+    }
+    const timedWinner=currentMode.timed?(teamScores.red===teamScores.blue?null:teamScores.red>teamScores.blue?"red":"blue"):null;
+    const teamWon=currentMode.timed?timedWinner===playerTeam:won;
+    const draw=currentMode.timed&&timedWinner===null;
+    $("endTitle").textContent=currentMode.teamMode
+      ?draw?"EMPATE!":currentMode.timed?`VITÓRIA ${timedWinner==="red"?"VERMELHA":"AZUL"}!`:won?`VITÓRIA ${playerTeam==="red"?"VERMELHA":"AZUL"}!`:"ELIMINADO"
+      :won?"VOCÊ SOBREVIVEU":"ELIMINADO";
+    $("endTitle").style.color=draw?"#f0f0e9":currentMode.teamMode&&currentMode.timed&&timedWinner?TEAM_COLORS[timedWinner]:won?(currentMode.teamMode?TEAM_COLORS[playerTeam]:"var(--acid)"):"#ee8777";
+    $("endMessage").textContent=currentMode.timed
+      ?`Placar final — Vermelho ${teamScores.red} × ${teamScores.blue} Azul. ${draw?"Os times terminaram empatados.":`O time ${timedWinner==="red"?"vermelho":"azul"} venceu.`}`
+      :won?`${currentMode.teamMode?"O time adversário foi eliminado.":"Todos os bots foram eliminados."} Você fez ${score} eliminações. Bom trabalho, operador.`
+      :`Você fez ${score} ${score===1?"eliminação":"eliminações"}. Reúna equipamento e tente novamente.`;
+    $("endModal").classList.add("open");
+    if(currentMode.timed&&draw)playTone(220,.3,"triangle",.06);
+    else if(won&&(!currentMode.timed||teamWon)){playTone(523,.18,"triangle",.08);setTimeout(()=>playTone(659,.22,"triangle",.08),150);setTimeout(()=>playTone(784,.3,"triangle",.08),340)}
+    else playTone(72,.42,"sawtooth",.08);
   }
   function frame(now){
     if(!running)return;resize();const dt=Math.min(.05,(now-lastFrame)/1000||0);lastFrame=now;
@@ -920,13 +1229,17 @@
   $("controlsBtn").addEventListener("click",()=>$("controls").classList.add("open"));
   $("closeControls").addEventListener("click",()=>$("controls").classList.remove("open"));
   $("soundToggle").addEventListener("change",e=>soundOn=e.target.checked);
+  $("trainingOption").addEventListener("change",e=>{
+    if($("gameMode").value==="training")$("modeDescription").textContent=TRAINING_DESCRIPTIONS[e.target.value]||TRAINING_DESCRIPTIONS.sniping;
+  });
+  $("playerTeam").addEventListener("change",e=>{gameRoot.dataset.team=e.target.value==="blue"?"blue":"red"});
   gameRoot.dataset.mode=$("gameMode").value;
   for(const card of document.querySelectorAll(".mode-card"))card.addEventListener("click",()=>{
     const mode=card.dataset.mode;
     $("gameMode").value=mode;
     gameRoot.dataset.mode=mode;
     for(const option of document.querySelectorAll(".mode-card"))option.setAttribute("aria-pressed",String(option===card));
-    $("modeDescription").textContent=MODE_DESCRIPTIONS[mode]||MODE_DESCRIPTIONS.normal;
+    $("modeDescription").textContent=mode==="training"?(TRAINING_DESCRIPTIONS[$("trainingOption").value]||TRAINING_DESCRIPTIONS.sniping):(MODE_DESCRIPTIONS[mode]||MODE_DESCRIPTIONS.normal);
   });
   function setAiming(value){
     isAiming=value;

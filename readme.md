@@ -21,10 +21,29 @@ Não é necessário instalar dependências ou iniciar um servidor.
 | Peiba! | 14 | Escopetas com alcance ampliado e dano reduzido à distância |
 | Afiado! | 10 | Faca, sem troca de arma |
 | Hardcore | 20 | Inimigos mais fortes, cenário escuro e escolha da arma inicial |
+| Pistoleiros | 18 | Pistola, revólver, Glock e pistola .38 |
+| Treinar é bom! | Configurável | Seis treinos de tiro, alvos e bots |
+| Bazooca! | 15 | Só a bazuca, com foguetes explosivos |
+| Em equipe! | 20 por equipe | Escolha vermelho ou azul; eliminação ou partida de 5 minutos |
 
-**Todos os bots usam M4A1 em todos os modos.**
+No modo **Treinar é bom!**, escolha entre:
+
+| Treino | Configuração |
+|---|---|
+| Snipando | AWM com mira, alvos a longa distância e 0 bots |
+| Metralhando alvos | Alvos em movimento e 0 bots |
+| Normal | Alvos, todas as armas e 5 bots de faca |
+| Faca no alvo | Alvos e 10 bots de faca parados e passivos |
+| Pistoleirando | Alvos em movimento e 10 bots de faca |
+| PEIBAAA! | Todas as escopetas, alvos parados e em movimento e 10 bots de pistola |
+
+As armas novas são o revólver, pistola .38, Glock, AWM e bazuca. A mira da AWM revela bots atrás das paredes, e seus disparos atravessam paredes.
+
+Nos modos existentes, os bots continuam usando M4A1. No modo Pistoleiros, os bots usam apenas as armas de pistola do modo.
 
 No modo Hardcore, escolha qualquer arma da lista antes de iniciar. As outras armas aparecem espalhadas pelo mapa. As escopetas incluem a Escopeta, M1014, Calibre 12 e Dois Canos.
+
+No modo **Bazooca!**, você começa com a bazuca e munição limitada; os foguetes causam dano explosivo em área. No modo **Em equipe!**, escolha o time vermelho ou azul e o tipo de partida: eliminação total ou 5 minutos. Cada lado tem 20 bots, todas as armas ficam espalhadas pelo mapa e os aliados não atacam uns aos outros. Na partida de 5 minutos, jogadores e bots reaparecem sem limite; vence o time com mais eliminações (empate se igualar). Ao terminar a partida, o resumo mostra eliminações, mortes, precisão e K/D do jogador.
 
 ## Controles
 
@@ -80,10 +99,27 @@ No dependencies or server setup are required.
 | Peiba! (Shotgun Showdown!) | 14 | Shotguns with extended range and reduced damage at a distance |
 | Afiado! (Sharp!) | 10 | Knife; weapon switching is disabled |
 | Hardcore | 20 | Tougher enemies, a dark map, and player-selected starting weapon |
+| Bazooca! | 15 | Bazooka only, with explosive rockets |
+| Em equipe! | 20 per team | Choose red or blue; elimination or 5-minute match |
 
-**Every bot uses an M4A1 in every game mode.**
+Bots in the original modes use an M4A1.
 
 In Hardcore mode, choose any weapon from the list before starting. The other weapons are placed around the map. Shotguns include the Escopeta, M1014, Calibre 12, and Dois Canos (double-barrel).
+
+**Pistoleiros** restricts the match to the pistol, revolver, Glock, and .38 pistol. **Treinar é bom!** offers six practice presets:
+
+| Practice | Setup |
+|---|---|
+| Snipando | Scoped AWM, long-range targets, and 0 bots |
+| Metralhando alvos | Moving targets and 0 bots |
+| Normal | Targets, every weapon, and 5 knife bots |
+| Faca no alvo | Targets and 10 stationary, passive knife bots |
+| Pistoleirando | Moving targets and 10 knife bots |
+| PEIBAAA! | All shotguns, static and moving targets, and 10 pistol bots |
+
+New weapons are the revolver, .38 pistol, Glock, AWM, and bazooka. The AWM scope reveals bots behind walls, and its shots penetrate walls. Existing modes keep their M4A1 bots; Pistoleiros uses only its pistol weapons for bots.
+
+In **Bazooca!**, you start with the bazooka and limited ammunition; rockets deal area damage. In **Em equipe!**, choose the red or blue side and match type: elimination or 5 minutes. Each side has 20 bots, every weapon is scattered around the map, and teammates do not attack one another. In the 5-minute match, players and bots respawn without limit; the side with the most eliminations wins (ties are draws). The end-of-match summary shows the player's eliminations, deaths, accuracy, and K/D.
 
 ## Controls
 
