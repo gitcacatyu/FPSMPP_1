@@ -81,7 +81,7 @@ function createGame() {
   const window = { addEventListener() {} };
   const instrumentedScript = script.replace(
     /\n\}\)\(\);\s*$/,
-    "\nwindow.__gameTest={startGame,shoot,update,endGame,damagePlayer,renderWorld,lineBlocked,weaponSpecs,worldThemes:WORLD_THEMES,get player(){return player},get bots(){return bots},get targets(){return targets},get explosions(){return explosions},get incomingShots(){return incomingShots},get pickups(){return pickups},get playerTeam(){return playerTeam},get currentMode(){return currentMode},get teamScores(){return teamScores},get playerStats(){return playerStats},get zoneTimer(){return zoneTimer},get flashlightOn(){return flashlightOn}};})();",
+    "\nwindow.__gameTest={startGame,shoot,update,endGame,damagePlayer,damageBot,renderWorld,lineBlocked,weaponSpecs,worldThemes:WORLD_THEMES,get player(){return player},get bots(){return bots},get targets(){return targets},get explosions(){return explosions},get incomingShots(){return incomingShots},get pickups(){return pickups},get playerTeam(){return playerTeam},get playerLeadsTeam(){return playerLeadsTeam},get currentMode(){return currentMode},get teamScores(){return teamScores},get playerStats(){return playerStats},get zoneTimer(){return zoneTimer},get flashlightOn(){return flashlightOn}};})();",
   );
   assert.notEqual(instrumentedScript, script, "game test hook must be attached");
   vm.runInNewContext(instrumentedScript, {
@@ -191,7 +191,29 @@ test("team mode assigns 20 bots to each side and supports choosing the blue team
   assert.equal(game.bots.filter(bot => bot.team === "blue").length, 20);
   assert.equal(game.playerTeam, "blue");
   assert.equal(game.player.team, "blue");
+  assert.equal(game.bots.filter(bot => bot.isCpuPlayer).length, 1);
+  const cpu = game.bots.find(bot => bot.isCpuPlayer);
+  assert.equal(cpu.team, "red");
+  assert.equal(cpu.health, 120);
+  assert.equal(cpu.maxHealth, 120);
+  assert.equal(cpu.armor, 100);
+  assert.equal(cpu.maxArmor, 100);
+  assert.equal(cpu.cpuWeapons.length, 1);
   assert.match(elements.get("activeModeName").textContent, /AZUL/);
+});
+
+test("team mode assigns its CPU player to the opposing side in both match types", () => {
+  for (const matchType of ["elimination", "timed"]) {
+    const { game, elements } = createGame();
+    elements.get("gameMode").value = "teams";
+    elements.get("playerTeam").value = "red";
+    elements.get("teamMatchType").value = matchType;
+    game.startGame();
+
+    const cpuPlayers = game.bots.filter(bot => bot.isCpuPlayer);
+    assert.equal(cpuPlayers.length, 1);
+    assert.equal(cpuPlayers[0].team, "blue");
+  }
 });
 
 test("team mode scatters every weapon, including the player's starting weapon", () => {
@@ -204,6 +226,163 @@ test("team mode scatters every weapon, including the player's starting weapon", 
     .map(pickup => pickup.type);
   assert.deepEqual([...scatteredWeapons].sort(), Object.keys(game.weaponSpecs).sort());
   assert.equal(new Set(scatteredWeapons).size, scatteredWeapons.length);
+});
+
+test("team CPU picks up weapons, armor, and medical kits without removing them", () => {
+  for (const type of ["AWM", "COLETE", "KIT MÉDICO"]) {
+    const { game, elements } = createGame();
+    elements.get("gameMode").value = "teams";
+    elements.get("teamMatchType").value = "timed";
+    game.startGame();
+    const cpu = game.bots.find(bot => bot.isCpuPlayer);
+    const pickup = game.pickups.find(item => item.type === type);
+    assert.ok(cpu);
+    assert.ok(pickup, `${type} should be available on the team map`);
+    game.pickups = [pickup];
+    for (const bot of game.bots) {
+      if (bot !== cpu) bot.alive = false;
+    }
+    cpu.x = pickup.x;
+    cpu.y = pickup.y;
+    if (type === "KIT MÉDICO") cpu.health = 50;
+    if (type === "COLETE") cpu.armor = 0;
+    game.player.deadAt = 100000;
+
+    game.update(.05, 2000);
+
+    assert.ok(game.pickups.includes(pickup), `${type} remains available to the player`);
+    assert.ok(cpu.collectedPickups.has(pickup));
+    if (type === "AWM") {
+      assert.equal(cpu.weapon, "AWM");
+      assert.ok(cpu.cpuWeapons.includes("AWM"));
+    } else if (type === "KIT MÉDICO") {
+      assert.equal(cpu.health, 90);
+    } else {
+      assert.equal(cpu.armor, 100);
+      game.damageBot(cpu, 100, 2100);
+      assert.equal(cpu.armor, 35, "the collected vest absorbs damage");
+      assert.equal(cpu.health, 85);
+    }
+  }
+});
+
+test("team CPU can collect a fifth weapon by replacing a slot and keeps four total", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "teams";
+  elements.get("teamMatchType").value = "timed";
+  game.startGame();
+  const cpu = game.bots.find(bot => bot.isCpuPlayer);
+  const pickup = game.pickups.find(item => item.type === "BAZUCA");
+  for (const bot of game.bots) {
+    if (bot !== cpu) bot.alive = false;
+  }
+  cpu.cpuWeapons = ["PISTOLA", "M4A1", "AK-47", "FACA"];
+  cpu.x = pickup.x;
+  cpu.y = pickup.y;
+  game.pickups = [pickup];
+  game.player.deadAt = 100000;
+
+  game.update(.05, 2000);
+
+  assert.equal(cpu.cpuWeapons.length, 4);
+  assert.ok(cpu.cpuWeapons.includes("BAZUCA"));
+  assert.ok(!cpu.cpuWeapons.includes("FACA"));
+  assert.equal(cpu.weapon, "BAZUCA");
+  assert.ok(game.pickups.includes(pickup));
+});
+
+test("team CPU navigates toward available weapons when no enemies are nearby", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "teams";
+  elements.get("teamMatchType").value = "timed";
+  game.startGame();
+  const cpu = game.bots.find(bot => bot.isCpuPlayer);
+  const pickup = game.pickups.find(item => item.type === "AWM");
+  const pair = findOpenPair(game, 2);
+  for (const bot of game.bots) {
+    if (bot !== cpu) bot.alive = false;
+  }
+  game.pickups = [pickup];
+  Object.assign(cpu, pair.start);
+  Object.assign(pickup, pair.target);
+  game.player.deadAt = 100000;
+
+  for (let now = 2000; now <= 2500; now += 50) game.update(.05, now);
+
+  assert.ok(cpu.cpuWeapons.includes("AWM"));
+  assert.ok(game.pickups.includes(pickup));
+});
+
+test("team CPU chooses AWM and fires at a visible opponent from sniper range", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "teams";
+  elements.get("playerTeam").value = "blue";
+  elements.get("teamMatchType").value = "timed";
+  game.startGame();
+  const cpu = game.bots.find(bot => bot.isCpuPlayer);
+  for (const bot of game.bots) {
+    if (bot !== cpu) bot.alive = false;
+  }
+  const pair = findOpenPair(game, 32);
+  Object.assign(cpu, pair.start, { weapon: "M4A1", cpuWeapons: ["M4A1", "AWM"], cooldown: -1 });
+  Object.assign(game.player, pair.target, { team: "blue", deadAt: null, health: 100 });
+  cpu.angle = Math.atan2(game.player.y - cpu.y, game.player.x - cpu.x);
+
+  game.update(.05, 2000);
+
+  assert.equal(cpu.weapon, "AWM");
+  assert.ok(game.incomingShots.length > 0, "the CPU should fire while the player is beyond standard bot range");
+});
+
+test("player's team follows the player by default and can be told not to", () => {
+  for (const followPlayer of [true, false]) {
+    const { game, elements } = createGame();
+    elements.get("gameMode").value = "teams";
+    elements.get("teamMatchType").value = "timed";
+    elements.get("teamFollowPlayer").checked = followPlayer;
+    game.startGame();
+    const follower = game.bots.find(bot => bot.team === game.playerTeam);
+    const cpu = game.bots.find(bot => bot.isCpuPlayer);
+    for (const bot of game.bots) {
+      if (bot !== follower) bot.alive = false;
+    }
+    const pair = findOpenPair(game, 8);
+    Object.assign(game.player, pair.start, { deadAt: null });
+    Object.assign(follower, pair.target, {
+      angle: Math.atan2(pair.target.y - pair.start.y, pair.target.x - pair.start.x),
+      moveTimer: 10,
+    });
+    game.pickups = [];
+    assert.equal(game.playerLeadsTeam, followPlayer);
+    const initialDistance = Math.hypot(follower.x - game.player.x, follower.y - game.player.y);
+
+    game.update(.05, 2000);
+
+    const distance = Math.hypot(follower.x - game.player.x, follower.y - game.player.y);
+    assert.equal(distance < initialDistance, followPlayer);
+    assert.ok(cpu);
+  }
+});
+
+test("opposing CPU's squad follows its CPU leader when idle", () => {
+  const { game, elements } = createGame();
+  elements.get("gameMode").value = "teams";
+  elements.get("teamMatchType").value = "timed";
+  game.startGame();
+  const cpu = game.bots.find(bot => bot.isCpuPlayer);
+  const follower = game.bots.find(bot => bot.team === cpu.team && bot !== cpu);
+  for (const bot of game.bots) {
+    if (bot !== cpu && bot !== follower) bot.alive = false;
+  }
+  const pair = findOpenPair(game, 8);
+  Object.assign(cpu, pair.start);
+  Object.assign(follower, pair.target, { angle: Math.PI });
+  game.pickups = [];
+  game.player.deadAt = 100000;
+
+  game.update(.05, 2000);
+
+  assert.ok(Math.hypot(follower.x - cpu.x, follower.y - cpu.y) < 8);
 });
 
 test("team mode prevents the player from damaging an allied bot", () => {
@@ -297,6 +476,7 @@ test("timed team match awards eliminations to the player's team", () => {
     team: "blue",
     alive: true,
     health: 10,
+    armor: 0,
   });
   game.player.weapon = "M4A1";
   game.player.ammo = game.weaponSpecs.M4A1.mag;
@@ -332,7 +512,7 @@ test("team match end screen shows the player's eliminations, deaths, accuracy, a
   game.player.x = pair.start.x;
   game.player.y = pair.start.y;
   game.player.angle = Math.atan2(pair.target.y - pair.start.y, pair.target.x - pair.start.x);
-  Object.assign(enemy, pair.target, { team: "blue", alive: true, health: 10 });
+  Object.assign(enemy, pair.target, { team: "blue", alive: true, health: 10, armor: 0 });
   game.player.weapon = "M4A1";
   game.player.ammo = game.weaponSpecs.M4A1.mag;
 
